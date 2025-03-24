@@ -1,0 +1,78 @@
+#!/bin/bash
+
+function what_is_choice_samp()
+{
+    while true; do
+        echo "# Select: [L]inux for Linux Files [W]indows for Windows Files"
+        read -r -p ">> " SEL_CO
+        case "$SEL_CO" in
+            [Ll])
+                send_samp_linux "" && break ;;
+            [Ww])
+                send_samp_win "" && break ;;
+            *)
+                echo -e "$(bash_coltext_r "err:") Invalid selection. Please enter L or W." ;;
+        esac
+    done
+}
+export what_is_choice_samp
+
+function what_is_choice_pawncc()
+{
+    while true; do
+        echo "# Select: [L]inux for Linux Files [W]indows for Windows Files"
+        read -r -p ">> " SEL_CO
+        case "$SEL_CO" in
+            [Ll])
+                send_compilers_linux "" && break ;;
+            [Ww])
+                send_compilers_win "" && break ;;
+            *)
+                echo -e "$(bash_coltext_r "err:") Invalid selection. Please enter L or W." ;;
+        esac
+    done
+}
+export what_is_choice_pawncc
+
+function fetch_now()
+{
+    __lat=""
+    if [ -f "$shell_DIR/.commits" ]; then
+        __cur=$(cat "$shell_DIR/.commits" 2>/dev/null)
+    else
+        __cur=""
+    fi
+    
+    __lat=$(curl -s "https://api.github.com/repos/vilksons/triops/commits/main" | grep -o '"sha": "[^"]*' | awk -F': "' '{print $2}')
+    
+    echo -e "
+d888888b d8888b. d888888b  .d88b.  d8888b. .d8888. 
+\`~~88~~' 88  \`8D   \`88'   .8P  Y8. 88  \`8D 88'  YP 
+88    88oobY'    88    88    88 88oodD' \`8bo.   
+88    88\`8b      88    88    88 88~~~     \`Y8b. 
+88    88 \`88.   .88.   \`8b  d8' 88      db   8D 
+YP    88   YD Y888888P  \`Y88P'  88      \`8888Y' 
+"
+
+
+    if [[ "$__lat" == "$__cur" ]]; then
+        echo "Triops is up-to-date."
+    else
+        echo "Triops is behind the times"
+    fi
+    
+    echo "Triops Licenses: $LICENSES"
+
+    find_PLATFORM=""
+    if [ $__LINUX == 1 ]; then find_PLATFORM="Linux"; fi
+    if [ $__WINDOWS == 1 ]; then find_PLATFORM="${find_PLATFORM:+$find_PLATFORM & }Windows"; fi
+    if [ $__DARWIN == 1 ]; then find_PLATFORM="${find_PLATFORM:+$find_PLATFORM & }Darwin / MacOS"; fi
+
+    if [ -n "$find_PLATFORM" ]; then
+        echo "Triops Platform: $find_PLATFORM"
+    else
+        echo "Triops Platform: Unknown"
+    fi
+    bash_end ""
+}
+export fetch_now
