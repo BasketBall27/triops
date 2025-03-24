@@ -26,8 +26,8 @@ COMPILERS() {
 
   while IFS= read -r -d '' __file; do
     if [[ -f "$__file" ]]; then
-      AMX="${__file%.io*}.amx"
-      "$BASHPAWNCC" -i"$shell_DIR$shell_ALLOW_SDIR" "$__file" -o"$AMX" -o"$AMX_O" "$AMX_OPTION"
+      AMX_O="${__file%.io*}.amx"
+      "$BASHPAWNCC" -i"$shell_DIR$shell_ALLOW_SDIR" "$__file" -o"$AMX_O" "$AMX_OPTION"
     fi
   done < <(find "$BASHDIR" -type f -name "*.io*" -print0)
 
