@@ -33,8 +33,8 @@ DO_NOT_SHOW_LNOT=0
 SERVERS_NEXT=0
 export SERVERS_NEXT
 
-METADAT_FILE=".cache/compiler.log"
-export METADAT_FILE
+__cache_save=".cache/compiler.log"
+export __cache_save
 
 shell_TITLE=""
 export shell_TITLE
@@ -353,9 +353,9 @@ mode_TRIOPS() {
 
                             for _ in {1..10}; do
                                 if [ $COMPILER_NEXT == 1 ]; then
-                                    "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" "$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" > "$METADAT_FILE" 2>&1
+                                    "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" "$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" > "$__cache_save" 2>&1
                                 elif [ $COMPILER_NEXT == 2 ]; then
-                                    "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" "$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" "${commands_OPAMX[@]}" > "$METADAT_FILE" 2>&1
+                                    "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" "$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" "${commands_OPAMX[@]}" > "$__cache_save" 2>&1
                                 fi
                             done
                             
@@ -366,7 +366,7 @@ mode_TRIOPS() {
                         
                         bash_cache_compiler ""
                         ignore_this sleep 0.1 &&
-                        cat "$METADAT_FILE"
+                        cat "$__cache_save"
 
                         if [ -s "$AMX_O" ]; then
                             echo
@@ -410,10 +410,6 @@ mode_TRIOPS() {
             local commands_ARGS="${main_commands#running }"
             
             if [[ -n "$commands_ARGS" && "$commands_ARGS" != "$main_commands" ]]; then
-                if [ $__SAMP_SERVER == 0 ]; then
-                    echo "err: this not allowed if SA-MP not Detected!"
-                    bash_end ""
-                fi
                 commands_INPUT="$commands_ARGS"
             else
                 space_servers ""
@@ -476,6 +472,12 @@ mode_TRIOPS() {
             else
                 echo -e "$(bash_coltext_a ":: Enter GM Name:")"
                 read -r -p ">>> " commands_INPUT
+
+                echo -e "$(bash_coltext_a ":: Enter GM Name:")"
+                while true; do
+                    read -r -p ">>> " commands_INPUT
+                    [[ -n "$commands_INPUT" ]] && break
+                done
             fi
 
             SERVERS_NEXT=2
@@ -483,10 +485,6 @@ mode_TRIOPS() {
             if [ "$commands_INPUT" == "." ]; then
                 space_servers ""
             else
-                if [ $__SAMP_SERVER == 0 ]; then
-                    echo "err: this not allowed if SA-MP not Detected!"
-                    bash_end ""
-                fi
                 space_wargs_servers "$commands_INPUT"
             fi
             bash_end ""

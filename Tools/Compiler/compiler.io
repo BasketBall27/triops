@@ -65,7 +65,7 @@ function triops_compilers() {
             start_time=$(date +%s%3N)
 
                 for _ in {1..10}; do
-                    "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" "$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" > "$METADAT_FILE" 2>&1
+                    "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" "$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" > "$__cache_save" 2>&1
                 done
 
             end_time=$(date +%s%3N)
@@ -75,7 +75,7 @@ function triops_compilers() {
 
             bash_cache_compiler ""
             sleep 0.1 > /dev/null &&
-            cat "$METADAT_FILE"
+            cat "$__cache_save"
 
             if [ -s "$AMX_O" ]; then
                 echo
