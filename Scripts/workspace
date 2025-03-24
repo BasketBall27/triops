@@ -24,6 +24,8 @@ __SAMP_LOG=""
 export __SAMP_LOG
 __SAMP_NEXT_QUERY=0
 export __SAMP_NEXT_QUERY
+__SAMP_SERVER=0
+export __SAMP_SERVER
 
 MODULE_LOADED_NOTICE=0
 DO_NOT_SHOW_LNOT=0
@@ -138,9 +140,7 @@ function load_module() {
     if [ -f "$module_path" ] && [ "$DO_NOT_SHOW_LNOT" != 1 ]; then
         chmod +x "$module_path"
         if [ "$module_name" == ".workspace.py" ]; then
-            source <(python3 .workspace.py) ||
-                sleep 0.1 &&
-                    source <(python3 .workspace.py)
+            source <(python3 .workspace.py) || echo
         else
             source "$module_path"
         fi
@@ -410,6 +410,10 @@ mode_TRIOPS() {
             local commands_ARGS="${main_commands#running }"
             
             if [[ -n "$commands_ARGS" && "$commands_ARGS" != "$main_commands" ]]; then
+                if [ $__SAMP_SERVER == 0 ]; then
+                    echo "err: this not allowed if SA-MP not Detected!"
+                    bash_end ""
+                fi
                 commands_INPUT="$commands_ARGS"
             else
                 space_servers ""
@@ -420,6 +424,10 @@ mode_TRIOPS() {
             if [ "$commands_INPUT" == "." ]; then
                 space_servers ""
             else
+                if [ $__SAMP_SERVER == 0 ]; then
+                    echo "err: this not allowed if SA-MP not Detected!"
+                    bash_end ""
+                fi
                 space_wargs_servers "$commands_INPUT"
             fi
             bash_end ""
@@ -460,28 +468,12 @@ mode_TRIOPS() {
             local commands_ARGS="${main_commands#debug }"
             
             if [[ -n "$commands_ARGS" && "$commands_ARGS" != "$main_commands" ]]; then
+                if [ $__SAMP_SERVER == 0 ]; then
+                    echo "err: this not allowed if SA-MP not Detected!"
+                    bash_end ""
+                fi
                 commands_INPUT="$commands_ARGS"
             else
-                if [ ! -f "$shell_DIR/$__SAMP_EXEC" ]; then
-                    echo -e "$(bash_coltext_r "crit:") $__SAMP_EXEC not found!. You can get this in \`gamemode\`" && read -r -n 1 -s
-                    echo
-                    read -r -p "install now? [y/n] " INSTALL_NOW
-
-                    while true; do
-                        case "$INSTALL_NOW" in
-                            [Yy])
-                                what_is_choice_samp ""
-                                ;;
-                            [Nn])
-                                bash_typeof ""
-                                ;;
-                            *)
-                                what_is_choice_samp ""
-                                ;;
-                        esac
-                    done
-                fi
-                
                 echo -e "$(bash_coltext_a ":: Enter GM Name:")"
                 read -r -p ">>> " commands_INPUT
             fi
@@ -491,6 +483,10 @@ mode_TRIOPS() {
             if [ "$commands_INPUT" == "." ]; then
                 space_servers ""
             else
+                if [ $__SAMP_SERVER == 0 ]; then
+                    echo "err: this not allowed if SA-MP not Detected!"
+                    bash_end ""
+                fi
                 space_wargs_servers "$commands_INPUT"
             fi
             bash_end ""

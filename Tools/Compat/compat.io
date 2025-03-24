@@ -77,6 +77,7 @@ __handleOS() {
             SAMP_FOUND=$(find . -maxdepth 1 -type f -name "samp-server.exe" | head -n 1)
         fi
         if [[ -n "$SAMP_FOUND" ]]; then
+            __SAMP_SERVER=1
             __CONF_SAMP ""
         else
             echo -e "$(bash_coltext_r "crit:") server not found!. You can get this in \`gamemode\`"
