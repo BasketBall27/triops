@@ -22,10 +22,10 @@ SET "AMX_OPTION=-;+ -(+ -d3"
       EXIT /B
   )
 
-  FOR /r "%BATCHDIR%" %%F IN (*.io*) DO (
+  FOR /r "%BATCHDIR%" %%F IN (*.pwn*) DO (
       IF EXIST "%%F" (
           SET "AMX=%%~dpnF"
-          SET "AMX=!AMX:.io=!%.amx"
+          SET "AMX=!AMX:.pwn=!%.amx"
           "%BATCHPAWNCC%" "%%F" -o"!AMX!" "!AMX_OPTION!"
       )
   )

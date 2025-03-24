@@ -23,8 +23,8 @@ while true; do
         continue
     fi
 
-    find "$BASHDIR" -type f -name "*.io*" | while read -r __file; do
-        AMX_O="$(dirname "$__file")/$(basename "${__file%.io*}.amx")"
+    find "$BASHDIR" -type f -name "*.pwn*" | while read -r __file; do
+        AMX_O="$(dirname "$__file")/$(basename "${__file%.pwn*}.amx")"
         echo "Compiling $__file -> $AMX_O"
         "$BASHPAWNCC" -i"$shell_DIR$shell_ALLOW_SDIR" "$__file" -o"$AMX_O" "$AMX_OPTION" || echo "Compilation failed for $__file" >&2
     done

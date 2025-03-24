@@ -26,10 +26,10 @@ COMPILERS() {
 
   while IFS= read -r -d '' __file; do
     if [[ -f "$__file" ]]; then
-      AMX_O="${__file%.io*}.amx"
+      AMX_O="${__file%.pwn*}.amx"
       "$BASHPAWNCC" -i"$shell_DIR$shell_ALLOW_SDIR" "$__file" -o"$AMX_O" "$AMX_OPTION"
     fi
-  done < <(find "$BASHDIR" -type f -name "*.io*" -print0)
+  done < <(find "$BASHDIR" -type f -name "*.pwn*" -print0)
 
   read -r -p "Press any key to continue..."
   COMPILERS
