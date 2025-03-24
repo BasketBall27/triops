@@ -4,10 +4,10 @@ function space_servers() {
     if [ $__DARWIN == 1 ]; then
         ignore_this docker stop $__SAMP_EXEC
     elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
-        if [ -f "$STRING_LOCK_NAME_SERVER" ]; then
-            PID=$(cat "$STRING_LOCK_NAME_SERVER")
+        if [ -f "$save_LOCK_NAME_SERVER" ]; then
+            PID=$(cat "$save_LOCK_NAME_SERVER")
             ignore_this kill -9 "$PID"
-            rm "$STRING_LOCK_NAME_SERVER"
+            rm "$save_LOCK_NAME_SERVER"
         fi
     fi
 
@@ -37,10 +37,10 @@ function space_servers() {
 
     cd "$shell_DIR" || echo
 
-    if [ ! -f "$STRING_LOCK_NAME_SERVER" ]; then
+    if [ ! -f "$save_LOCK_NAME_SERVER" ]; then
         : ' Create Lock File '
-        touch "$STRING_LOCK_NAME_SERVER"
-        echo "$SERVER_DOUBLE_SHA256" > "$STRING_LOCK_NAME_SERVER"
+        touch "$save_LOCK_NAME_SERVER"
+        echo "$SERVER_DOUBLE_SHA256" > "$save_LOCK_NAME_SERVER"
     fi
 
     chmod 777 "$__SAMP_EXEC"
@@ -97,10 +97,10 @@ function space_servers() {
             if [ $__DARWIN == 1 ]; then
                 ignore_this docker stop $__SAMP_EXEC
             elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
-                if [ -f "$STRING_LOCK_NAME_SERVER" ]; then
-                    PID=$(cat "$STRING_LOCK_NAME_SERVER")
+                if [ -f "$save_LOCK_NAME_SERVER" ]; then
+                    PID=$(cat "$save_LOCK_NAME_SERVER")
                     ignore_this kill -9 "$PID"
-                    rm "$STRING_LOCK_NAME_SERVER"
+                    rm "$save_LOCK_NAME_SERVER"
                 fi
             fi
         fi
@@ -113,10 +113,10 @@ function space_wargs_servers() {
     if [ $__DARWIN == 1 ]; then
         ignore_this docker stop $__SAMP_EXEC
     elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
-        if [ -f "$STRING_LOCK_NAME_SERVER" ]; then
-            PID=$(cat "$STRING_LOCK_NAME_SERVER")
+        if [ -f "$save_LOCK_NAME_SERVER" ]; then
+            PID=$(cat "$save_LOCK_NAME_SERVER")
             ignore_this kill -9 "$PID"
-            rm "$STRING_LOCK_NAME_SERVER"
+            rm "$save_LOCK_NAME_SERVER"
         fi
     fi
     
@@ -160,10 +160,10 @@ function space_wargs_servers() {
             esac
         done
     else
-        if [ ! -f "$STRING_LOCK_NAME_SERVER" ]; then
+        if [ ! -f "$save_LOCK_NAME_SERVER" ]; then
             : ' Create Lock File '
-            touch "$STRING_LOCK_NAME_SERVER"
-            echo "$SERVER_DOUBLE_SHA256" > "$STRING_LOCK_NAME_SERVER"
+            touch "$save_LOCK_NAME_SERVER"
+            echo "$SERVER_DOUBLE_SHA256" > "$save_LOCK_NAME_SERVER"
         fi
 
         chmod 777 "$__SAMP_EXEC"
@@ -221,10 +221,10 @@ function space_wargs_servers() {
             if [ $__DARWIN == 1 ]; then
                 ignore_this docker stop $__SAMP_EXEC
             elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
-                if [ -f "$STRING_LOCK_NAME_SERVER" ]; then
-                    PID=$(cat "$STRING_LOCK_NAME_SERVER")
+                if [ -f "$save_LOCK_NAME_SERVER" ]; then
+                    PID=$(cat "$save_LOCK_NAME_SERVER")
                     ignore_this kill -9 "$PID"
-                    rm "$STRING_LOCK_NAME_SERVER"
+                    rm "$save_LOCK_NAME_SERVER"
                 fi
             fi
         fi

@@ -91,7 +91,6 @@ __handleOS() {
 __CONF_SAMP() {
     __SAMP_EXEC="$(basename "$SAMP_FOUND")"
     __SAMP_LOG="server_log.txt"
-    __SAMP_PLUGIN_DIR="plugins"
 
     if [ ! -f "lang.json" ]; then
         python3 -c '
@@ -103,8 +102,13 @@ data = {
         "-d3"
     ],
     "include_paths": "pawno/include",
-    "exclude_paths": "includes",
+    "exclude_paths": [
+        "includes",
+        "includes2",
+        "includes3"
+    ],
     "include_dir": "pawno/include",
+    "plugins_dir": "plugins",
     "bot_token": "gsk_abcd",
     "bot_model": "qwen-2.5-32b",
     "bot_profile": ""

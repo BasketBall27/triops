@@ -22,8 +22,6 @@ __DIS_GNU_NANO=""
 export __DIS_GNU_NANO
 __SAMP_LOG=""
 export __SAMP_LOG
-__SAMP_PLUGIN_DIR="plugins"
-export __SAMP_PLUGIN_DIR
 __SAMP_NEXT_QUERY=0
 export __SAMP_NEXT_QUERY
 
@@ -244,11 +242,11 @@ mode_TRIOPS() {
             if [ $__DARWIN == 1 ]; then
                 ignore_this docker stop $__SAMP_EXEC
             elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
-                if [ -f "$STRING_LOCK_NAME_SERVER" ]; then
-                    PID=$(cat "$STRING_LOCK_NAME_SERVER")
+                if [ -f "$save_LOCK_NAME_SERVER" ]; then
+                    PID=$(cat "$save_LOCK_NAME_SERVER")
                     ignore_this kill -9 "$PID"
                     cd "$shell_DIR" >/dev/null 2>&1 || echo "" 
-                    ignore_this rm "$STRING_LOCK_NAME_SERVER"
+                    ignore_this rm "$save_LOCK_NAME_SERVER"
                 fi
             fi
             
@@ -355,9 +353,9 @@ mode_TRIOPS() {
 
                             for _ in {1..10}; do
                                 if [ $COMPILER_NEXT == 1 ]; then
-                                    "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" -i"$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" > "$METADAT_FILE" 2>&1
+                                    "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" "$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" > "$METADAT_FILE" 2>&1
                                 elif [ $COMPILER_NEXT == 2 ]; then
-                                    "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" -i"$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" "${commands_OPAMX[@]}" > "$METADAT_FILE" 2>&1
+                                    "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" "$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" "${commands_OPAMX[@]}" > "$METADAT_FILE" 2>&1
                                 fi
                             done
                             
@@ -401,11 +399,11 @@ mode_TRIOPS() {
             if [ $__DARWIN == 1 ]; then
                 ignore_this docker stop $__SAMP_EXEC
             elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
-                if [ -f "$STRING_LOCK_NAME_SERVER" ]; then
-                    PID=$(cat "$STRING_LOCK_NAME_SERVER")
+                if [ -f "$save_LOCK_NAME_SERVER" ]; then
+                    PID=$(cat "$save_LOCK_NAME_SERVER")
                     ignore_this kill -9 "$PID"
                     cd "$shell_DIR" >/dev/null 2>&1 || echo "" 
-                    ignore_this rm "$STRING_LOCK_NAME_SERVER"
+                    ignore_this rm "$save_LOCK_NAME_SERVER"
                 fi
             fi
             
@@ -432,11 +430,11 @@ mode_TRIOPS() {
             if [ $__DARWIN == 1 ]; then
                 ignore_this docker stop $__SAMP_EXEC
             elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
-                if [ -f "$STRING_LOCK_NAME_SERVER" ]; then
-                    PID=$(cat "$STRING_LOCK_NAME_SERVER")
+                if [ -f "$save_LOCK_NAME_SERVER" ]; then
+                    PID=$(cat "$save_LOCK_NAME_SERVER")
                     ignore_this kill -9 "$PID"
                     cd "$shell_DIR" >/dev/null 2>&1 || echo "" 
-                    ignore_this rm "$STRING_LOCK_NAME_SERVER"
+                    ignore_this rm "$save_LOCK_NAME_SERVER"
                 fi
             fi
 
@@ -451,11 +449,11 @@ mode_TRIOPS() {
             if [ $__DARWIN == 1 ]; then
                 ignore_this docker stop $__SAMP_EXEC
             elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
-                if [ -f "$STRING_LOCK_NAME_SERVER" ]; then
-                    PID=$(cat "$STRING_LOCK_NAME_SERVER")
+                if [ -f "$save_LOCK_NAME_SERVER" ]; then
+                    PID=$(cat "$save_LOCK_NAME_SERVER")
                     ignore_this kill -9 "$PID"
                     cd "$shell_DIR" >/dev/null 2>&1 || echo "" 
-                    ignore_this rm "$STRING_LOCK_NAME_SERVER"
+                    ignore_this rm "$save_LOCK_NAME_SERVER"
                 fi
             fi
 
@@ -503,11 +501,11 @@ mode_TRIOPS() {
             if [ $__DARWIN == 1 ]; then
                 ignore_this docker stop $__SAMP_EXEC
             elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
-                if [ -f "$STRING_LOCK_NAME_SERVER" ]; then
-                    PID=$(cat "$STRING_LOCK_NAME_SERVER")
+                if [ -f "$save_LOCK_NAME_SERVER" ]; then
+                    PID=$(cat "$save_LOCK_NAME_SERVER")
                     ignore_this kill -9 "$PID"
                     cd "$shell_DIR" >/dev/null 2>&1 || echo "" 
-                    ignore_this rm "$STRING_LOCK_NAME_SERVER"
+                    ignore_this rm "$save_LOCK_NAME_SERVER"
                 fi
             fi
             bash_end ""
@@ -525,11 +523,11 @@ mode_TRIOPS() {
                     echo "error: No progress Server running."
                 fi
             elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
-                if [ -f "$STRING_LOCK_NAME_SERVER" ]; then
-                    PID=$(cat "$STRING_LOCK_NAME_SERVER")
+                if [ -f "$save_LOCK_NAME_SERVER" ]; then
+                    PID=$(cat "$save_LOCK_NAME_SERVER")
                     ignore_this kill -9 "$PID"
                     cd "$shell_DIR" >/dev/null 2>&1 || echo "" 
-                    ignore_this rm "$STRING_LOCK_NAME_SERVER"
+                    ignore_this rm "$save_LOCK_NAME_SERVER"
 
                     ignore_this sleep 2
                     space_servers ""
@@ -698,11 +696,11 @@ mode_TRIOPS() {
                 bash
             fi
 
-            if [ -f "$STRING_LOCK_NAME" ]; then
-                PID=$(cat "$STRING_LOCK_NAME")
+            if [ -f "$save_LOCK_NAME" ]; then
+                PID=$(cat "$save_LOCK_NAME")
                 ignore_this kill -9 "$PID"
                 cd "$shell_DIR" >/dev/null 2>&1 || echo "" 
-                ignore_this rm "$STRING_LOCK_NAME"
+                ignore_this rm "$save_LOCK_NAME"
             fi
             bash
             ;;

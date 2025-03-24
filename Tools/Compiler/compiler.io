@@ -65,7 +65,7 @@ function triops_compilers() {
             start_time=$(date +%s%3N)
 
                 for _ in {1..10}; do
-                    "$COMPILER_PAWNCC" -i"$DEF_EXCLUDE" -i"$DEF_INCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" > "$METADAT_FILE" 2>&1
+                    "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" "$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" > "$METADAT_FILE" 2>&1
                 done
 
             end_time=$(date +%s%3N)

@@ -13,11 +13,11 @@ def double_sha256():
     return hash2
 
 SERVER_DOUBLE_SHA256 = double_sha256()
-shell_DOUBLE_SHA256 = double_sha256()
+SHELL_DOUBL_SHA255 = double_sha256()
 
 """ Export all double_sha256 to bash """
 print(f"export SERVER_DOUBLE_SHA256={SERVER_DOUBLE_SHA256}")
-print(f"export shell_DOUBLE_SHA256={shell_DOUBLE_SHA256}")
+print(f"export SHELL_DOUBL_SHA255={SHELL_DOUBL_SHA255}")
 
 def load_json():
     """ Load json for lang.json """
@@ -32,10 +32,15 @@ data = load_json()
 
 def print_export(key, value):
     print(f"export {key}='{value}'")
+    
+exclude_paths = data.get('exclude_paths', [])
+exclude_flags = ' '.join(f"-i{path}" for path in exclude_paths)
+
+print_export("DEF_EXCLUDE", exclude_flags)
 
 print_export("DEF_INCLUDE", data.get('include_paths', ''))
-print_export("DEF_EXCLUDE", data.get('exclude_paths', ''))
 print_export("TLIGPAC_DIR", data.get('include_dir', ''))
+print_export("TLIGPAC_PLUGINS", data.get('plugins_dir', ''))
 print_export("CHATBOT_TOKEN", data.get('bot_token', ''))
 print_export("CHATBOT_MODEL", data.get('bot_model', ''))
 print_export("CHATBOT_BIODATA", data.get('bot_profile', ''))
