@@ -71,11 +71,8 @@ __handleOS() {
             done
         fi
         
-        if [ $__LINUX == 1 ]; then
-            SAMP_FOUND=$(find . -maxdepth 1 -type f -name "samp03svr" | head -n 1)
-        elif [[ $__DARWIN == 1 || $__WINDOWS == 1 ]]; then
-            SAMP_FOUND=$(find . -maxdepth 1 -type f -name "samp-server.exe" | head -n 1)
-        fi
+        SAMP_FOUND=$(find . -maxdepth 1 -type f \( -name "samp03svr" -o -name "samp-server.exe" \) | head -n 1)
+    
         if [[ -n "$SAMP_FOUND" ]]; then
             __SAMP_SERVER=1
             __CONF_SAMP ""
