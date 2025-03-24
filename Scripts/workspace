@@ -891,8 +891,8 @@ function bash_help()
 
     echo "Usage: ops <command> | help | -h | --h | [<commands>]"
     echo "Commands:"
-    echo " compile (compilator), running, irunn (compile-run),"
-    echo " debug (debugger), stop (stopped server), restart (restart server)"
+    echo " compile, running, irunn (compile-run), debug (debugger)"
+    echo " stop (stopped server), restart (restart server)"
     echo " gamemode, pawncc, clear (clear-screen), checksums"
     echo " fcheck (folder-checks), cat, tligpac, kill, directory"
 
