@@ -621,7 +621,10 @@ mode_TRIOPS() {
             else
                 echo -e "$(bash_coltext_a ":: There is an update!. Commits: (SHA1): ")"
                 echo "$__lat"
-                read -r -p ":: Do you want to continue Sync Triops? [y/n] " PERMISSION_NEED_S
+                
+                read -r -n1 -p ":: Do you want to continue Sync Triops? [y/n] " PERMISSION_NEED_S
+
+                [[ -z "$PERMISSION_NEED_S" ]] && PERMISSION_NEED_S="Y"
 
                 while true; do
                     case "$PERMISSION_NEED_S" in
@@ -645,6 +648,8 @@ mode_TRIOPS() {
 
                             wget -q --show-progress -O ".workspace.py" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Scripts/workspace.py"
                             wget -q --show-progress -O "workspace" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Scripts/workspace"
+                            
+                            echo "$__lat" > "$shell_DIR/.commits"
 
                             sleep 1 && bash ./workspace
                             ;;
@@ -781,23 +786,25 @@ except json.JSONDecodeError:
             echo -e "$(bash_coltext_a ":: Cache Dir: $shell_DIR/.cache")"
             read -r -p ":: Do you want to remove ALL files from cache? [y/n] " PERMISSION_NEED_RC
 
+            [[ -z "$PERMISSION_NEED_RC" ]] && PERMISSION_NEED_RC="Y"
+
             while true; do
-            case "$PERMISSION_NEED_RC" in
-                [Yy])
-                    ignore_this cd "$shell_DIR" || echo ""
-                    ignore_this rm ".cache" && ignore_this sleep 1
+                case "$PERMISSION_NEED_RC" in
+                    [Yy])
+                        ignore_this cd "$shell_DIR" || echo ""
+                        ignore_this rm ".cache" && ignore_this sleep 1
 
-                    if [ ! -d ".cache" ]; then
-                        mkdir ".cache"
-                    fi
+                        if [ ! -d ".cache" ]; then
+                            mkdir ".cache"
+                        fi
 
-                    ignore_this sleep 0.100 &&
-                    bash_end ""
-                    break
-                    ;;
-                *)
-                    bash_end ""
-                    esac
+                        ignore_this sleep 0.100 &&
+                        bash_end ""
+                        break
+                        ;;
+                    *)
+                        bash_end ""
+                esac
             done
             ;;
         "fetch")

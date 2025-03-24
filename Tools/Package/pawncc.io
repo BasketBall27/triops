@@ -4,7 +4,8 @@ function send_compilers_linux()
 {
     echo ":: Do you want to continue downloading PawnCC? (Yy/Nn)"
     read -r -p ">> " SEL_C
-    if [[ "$SEL_C" =~ ^[Yy]$ ]]; then
+
+    if [[ -z "$SEL_C" || "$SEL_C" =~ ^[Yy]$ ]]; then
         cd "$shell_DIR" || bash_end ""
         echo "Select the PawnCC version to download:"
         echo "[A/a] PawnCC 3.10.10"
@@ -102,7 +103,8 @@ function send_compilers_win()
 {
     echo ":: Do you want to continue downloading PawnCC? (Yy/Nn)"
     read -r -p ">> " SEL_C
-    if [[ "$SEL_C" =~ ^[Yy]$ ]]; then
+    
+    if [[ -z "$SEL_C" || "$SEL_C" =~ ^[Yy]$ ]]; then
         cd "$shell_DIR" || bash_end ""
         echo "Select the PawnCC version to download:"
         echo "[A/a] PawnCC 3.10.10"

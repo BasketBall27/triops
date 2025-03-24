@@ -4,7 +4,8 @@ function send_samp_linux()
 {
     echo ":: Do you want to continue downloading SA-MP? (Yy/Nn)"
     read -r -p ">> " SEL_C
-    if [[ "$SEL_C" =~ ^[Yy]$ ]]; then
+
+    if [[ -z "$SEL_C" || "$SEL_C" =~ ^[Yy]$ ]]; then
         cd "$shell_DIR" || bash_end ""
         echo "Select the SA-MP version to download:"
         echo "[A/a] SA-MP  0.3.DL R1"
@@ -91,7 +92,8 @@ function send_samp_win()
 {
     echo ":: Do you want to continue downloading SA-MP? (Yy/Nn)"
     read -r -p ">> " SEL_C
-    if [[ "$SEL_C" =~ ^[Yy]$ ]]; then
+    
+    if [[ -z "$SEL_C" || "$SEL_C" =~ ^[Yy]$ ]]; then
         cd "$shell_DIR" || bash_end ""
         echo "Select the SA-MP version to download:"
         echo "[A/a] SA-MP 0.3.DL R1"
