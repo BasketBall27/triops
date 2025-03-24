@@ -313,20 +313,20 @@ function bash_TligPac()
                 echo -e "$(bash_coltext_y "dbg:") No matching plugins files found: $tligpac_REMOVE_PATTERN"
             fi
 
-            if [[ -f "server.cfg" ]]; then
-                if grep -q "^plugins" "server.cfg"; then
-                    sed -i "/^plugins /s/\b$tligpac_REMOVE_PATTERN\(\.so\|\.dll\|\)//g" "server.cfg"
-                    sed -i 's/  / /g' "server.cfg"
-                    sed -i 's/^plugins *$/plugins /' "server.cfg"
-                    echo -e "$(bash_coltext_y "[OK] ") Removed $tligpac_REMOVE_PATTERN from server.cfg"
+            if [ __SAMP_SERVER == 1 ]; then
+                if [[ -f "server.cfg" ]]; then
+                    if grep -q "^plugins" "server.cfg"; then
+                        sed -i "/^plugins /s/\b$tligpac_REMOVE_PATTERN\(\.so\|\.dll\|\)//g" "server.cfg"
+                        sed -i 's/  / /g' "server.cfg"
+                        sed -i 's/^plugins *$/plugins /' "server.cfg"
+                        echo -e "$(bash_coltext_y "[OK] ") Removed $tligpac_REMOVE_PATTERN from server.cfg"
+                    else
+                        echo -e "$(bash_coltext_y "dbg:") No 'plugins' entry found in server.cfg"
+                    fi
                 else
-                    echo -e "$(bash_coltext_y "dbg:") No 'plugins' entry found in server.cfg"
+                    echo -e "$(bash_coltext_g "warn:") server.cfg not found"
                 fi
-            else
-                echo -e "$(bash_coltext_g "warn:") server.cfg not found"
             fi
-
-            echo -e "$(bash_coltext_y "[OK] ") Removal process completed!"
             
             mode_TLIGPAC ""
             ;;
