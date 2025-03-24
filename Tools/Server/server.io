@@ -133,9 +133,9 @@ function space_wargs_servers() {
 
     mv server.cfg server.cfg.bak
         
-    awk -v new_gamemode="$OPS_FIND_INPUT" '
+    awk -v new_gamemode="$commands_INPUT" '
         /^gamemode0 / {$2=new_gamemode} 1' server.cfg.bak > server.cfg || \
-            sed -E "s/^(gamemode0 )[0-9]+/\1$OPS_FIND_INPUT/" server.cfg.bak > server.cfg
+            sed -E "s/^(gamemode0 )[0-9]+/\1$commands_INPUT/" server.cfg.bak > server.cfg
 
     echo ":: New server.cfg created with gamemode: $commands_INPUT"
     
