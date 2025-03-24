@@ -109,7 +109,7 @@ function space_servers() {
 export space_servers
 
 function space_wargs_servers() {
-    __SAMP_NEXT_QUERY=0
+    __SAMP_NEXT_QUERY=1
     if [ $__DARWIN == 1 ]; then
         ignore_this docker stop $__SAMP_EXEC
     elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
@@ -280,9 +280,11 @@ start_true3() {
     echo "    ; \"invalid\" .. Yes .. True"
     invalid_cache ""
 
+if [ $__SAMP_NEXT_QUERY == 1 ]; then
     rm -f server.cfg
     mv server.cfg.bak server.cfg
     echo "Original server.cfg has been restored."
+fi
 }
 export start_true3
 
@@ -294,9 +296,11 @@ start_false3() {
     echo "    ; \"invalid\" .. No .. False"
     echo
 
+if [ $__SAMP_NEXT_QUERY == 1 ]; then
     rm -f server.cfg
     mv server.cfg.bak server.cfg
     echo "Original server.cfg has been restored."
+fi
 }
 export start_false3
 
