@@ -113,6 +113,27 @@ main() {
 
 ## **Configuration (`lang.json`)**
 
+```json
+{
+    "amx_flags": [
+        "-;+",
+        "-(+",
+        "-d3"
+    ],
+    "include_paths": "pawno/include",
+    "exclude_paths": [
+        "includes",
+        "includes2",
+        "includes3"
+    ],
+    "include_dir": "pawno/include",
+    "plugins_dir": "plugins",
+    "bot_token": "gsk_abcd",
+    "bot_model": "qwen-2.5-32b",
+    "bot_profile": ""
+}
+```
+
 ### **Configuration Details**  
 
 | Key               | Description |
