@@ -235,7 +235,7 @@ Packages can be installed by specifying their URL or file path.
 
 --
 
-   ```diff
+   ```
    users@:~$ remove sscanf
    dbg: No matching include files found: sscanf
    [OK]  Removed plugins: plugins/amxsscanf.dll
@@ -251,7 +251,7 @@ Packages can be installed by specifying their URL or file path.
 
 #### **TligPac Configuration**  
 
-TligPac relies on the `tligpac.json` with python3 or `tligpac.toml` with tomlq configuration file, utilized when executing `$ install` without arguments.  
+TligPac relies on the `tligpac.json` or `tligpac.toml` with tomlq configuration file, utilized when executing `$ install` without arguments.  
 
 ##### **`tligpac.toml` Structure:**
 ```toml
