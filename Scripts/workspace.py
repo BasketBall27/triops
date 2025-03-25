@@ -47,7 +47,7 @@ def print_export(key, value):
 exclude_paths = data.get('exclude_paths', [])
 
 # Generate exclude flags by creating a space-separated string of the paths with '-i' prefix
-exclude_flags = ' '.join(f"-i{path}" for path in exclude_paths)
+exclude_flags = ' '.join(f'-i"{path}"' for path in exclude_paths)
 
 # Export the DEF_EXCLUDE environment variable with the exclude flags
 print_export("DEF_EXCLUDE", exclude_flags)

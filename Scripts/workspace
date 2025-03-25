@@ -214,12 +214,7 @@ function bash_typeof() {
         echo "Install first! See: https://github.com/vilksons/triops/wiki/Required-Packages"
         bash
     fi
-echo "$DEF_EXCLUDE"
-echo "$DEF_INCLUDE"
-echo "$TLIGPAC_DIR"
-echo "$__SAMP_PLUGIN_DIR"
-echo "$CHATBOT_TOKEN"
-echo "$AMX_OPT_F"
+
     save_TITLE "OPS Mode"
 
     main_commands=""
