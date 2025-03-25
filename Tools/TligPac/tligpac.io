@@ -245,11 +245,11 @@ function bash_TligPac()
 
 if [ $__SAMP_SERVER == 1 ]; then
             if [ ${#tligpac_NEWPLG[@]} -gt 0 ]; then
-                if ! grep -q "^plugins " "server.cfg"; then
-                    sed -i '1i plugins ' "server.cfg"
+                if ! grep -q "^plugins " "$SERVER_CONF"; then
+                    sed -i '1i plugins ' "$SERVER_CONF"
                 fi
                 
-                _tligpac_EXTPLG=$(grep -oP '(?<=plugins ).*' "server.cfg" | tr ' ' '\n' | sort -u)
+                _tligpac_EXTPLG=$(grep -oP '(?<=plugins ).*' "$SERVER_CONF" | tr ' ' '\n' | sort -u)
 
                 _tligpac_NEWPLG=()
                 for PLUGIN in "${tligpac_NEWPLG[@]}"; do
@@ -260,8 +260,8 @@ if [ $__SAMP_SERVER == 1 ]; then
 
                 if [ ${#_tligpac_NEWPLG[@]} -gt 0 ]; then
                     tligpac_UPDATED_PLUGINS=$(echo "$_tligpac_EXTPLG" "${_tligpac_NEWPLG[@]}" | tr '\n' ' ' | xargs -n1 | sort -u | xargs)
-                    sed -i "s/^plugins .*/plugins $tligpac_UPDATED_PLUGINS/" "server.cfg"
-                    echo " Added new plugins to server.cfg: ${_tligpac_NEWPLG[*]}"
+                    sed -i "s/^plugins .*/plugins $tligpac_UPDATED_PLUGINS/" "$SERVER_CONF"
+                    echo " Added new plugins to $SERVER_CONF: ${_tligpac_NEWPLG[*]}"
                 else
                     echo -e "$(bash_coltext_y "dbg:") No new plugins need to be added."
                 fi
@@ -316,17 +316,17 @@ fi
             fi
 
 if [ __SAMP_SERVER == 1 ]; then
-            if [[ -f "server.cfg" ]]; then
-                if grep -q "^plugins" "server.cfg"; then
-                    sed -i "/^plugins /s/\b$tligpac_REMOVE_PATTERN\(\.so\|\.dll\|\)//g" "server.cfg"
-                    sed -i 's/  / /g' "server.cfg"
-                    sed -i 's/^plugins *$/plugins /' "server.cfg"
-                    echo -e "$(bash_coltext_y "[OK] ") Removed $tligpac_REMOVE_PATTERN from server.cfg"
+            if [[ -f "$SERVER_CONF" ]]; then
+                if grep -q "^plugins" "$SERVER_CONF"; then
+                    sed -i "/^plugins /s/\b$tligpac_REMOVE_PATTERN\(\.so\|\.dll\|\)//g" "$SERVER_CONF"
+                    sed -i 's/  / /g' "$SERVER_CONF"
+                    sed -i 's/^plugins *$/plugins /' "$SERVER_CONF"
+                    echo -e "$(bash_coltext_y "[OK] ") Removed $tligpac_REMOVE_PATTERN from $SERVER_CONF"
                 else
-                    echo -e "$(bash_coltext_y "dbg:") No 'plugins' entry found in server.cfg"
+                    echo -e "$(bash_coltext_y "dbg:") No 'plugins' entry found in $SERVER_CONF"
                 fi
             else
-                echo -e "$(bash_coltext_g "warn:") server.cfg not found"
+                echo -e "$(bash_coltext_g "warn:") $SERVER_CONF not found"
             fi
 fi
             

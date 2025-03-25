@@ -88,7 +88,6 @@ __handleOS() {
 
 __CONF_SAMP() {
     __SAMP_EXEC="$(basename "$SAMP_FOUND")"
-    __SAMP_LOG="server_log.txt"
 
     if [ ! -f "lang.json" ]; then
         python3 -c '
@@ -109,7 +108,9 @@ data = {
     "plugins_dir": "plugins",
     "bot_token": "gsk_abcd",
     "bot_model": "qwen-2.5-32b",
-    "bot_profile": ""
+    "bot_profile": "",
+    "samp_log": "server_log.txt",
+    "server_conf": "server.cfg"
 }
 with open("lang.json", "w") as f:
     json.dump(data, f, indent=4)

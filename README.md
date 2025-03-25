@@ -146,7 +146,8 @@ main() {
 | `bot_token`      | API Key from [Groq Console](https://console.groq.com/keys). |
 | `bot_model`      | AI Model from [Groq Console](https://console.groq.com/). |
 | `bot_profile`    | Extra chatbot configuration. |
-
+| `samp_log`       | Log of Server Logs (SA-MP) |
+| `server_conf`    | Server Config name (SA-MP) |
 ---
 
 ## **Example: `include_paths` Usage**  

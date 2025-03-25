@@ -126,18 +126,18 @@ function space_wargs_servers() {
 
     local commands_INPUT=$1
     
-    if [ ! -f "server.cfg" ]; then
-        echo "server.cfg not found!"
+    if [ ! -f "$SERVER_CONF" ]; then
+        echo "$SERVER_CONF not found!"
         bash_end ""
     fi
 
-    mv server.cfg server.cfg.bak
+    mv $SERVER_CONF $SERVER_CONF.bak
         
     awk -v new_gamemode="$commands_INPUT" '
-        /^gamemode0 / {$2=new_gamemode} 1' server.cfg.bak > server.cfg || \
-            sed -E "s/^(gamemode0 )[0-9]+/\1$commands_INPUT/" server.cfg.bak > server.cfg
+        /^gamemode0 / {$2=new_gamemode} 1' $SERVER_CONF.bak > $SERVER_CONF || \
+            sed -E "s/^(gamemode0 )[0-9]+/\1$commands_INPUT/" $SERVER_CONF.bak > $SERVER_CONF
 
-    echo ":: New server.cfg created with gamemode: $commands_INPUT"
+    echo ":: New $SERVER_CONF created with gamemode: $commands_INPUT"
     
     if [ ! -f "$shell_DIR/$__SAMP_EXEC" ]; then
         echo -e "$(bash_coltext_r "crit:") $__SAMP_EXEC not found!. You can get this in \`gamemode\`"
@@ -279,9 +279,9 @@ start_true3() {
     invalid_cache ""
 
 if [ $__SAMP_NEXT_QUERY == 1 ]; then
-    rm -f server.cfg
-    mv server.cfg.bak server.cfg
-    echo "Original server.cfg has been restored."
+    rm -f $SERVER_CONF
+    mv $SERVER_CONF.bak $SERVER_CONF
+    echo "Original $SERVER_CONF has been restored."
 fi
 }
 export start_true3
@@ -295,9 +295,9 @@ start_false3() {
     echo
 
 if [ $__SAMP_NEXT_QUERY == 1 ]; then
-    rm -f server.cfg
-    mv server.cfg.bak server.cfg
-    echo "Original server.cfg has been restored."
+    rm -f $SERVER_CONF
+    mv $SERVER_CONF.bak $SERVER_CONF
+    echo "Original $SERVER_CONF has been restored."
 fi
 }
 export start_false3

@@ -20,8 +20,6 @@ __PAWNCC="null"
 export __PAWNCC
 __DIS_GNU_NANO=""
 export __DIS_GNU_NANO
-__SAMP_LOG=""
-export __SAMP_LOG
 __SAMP_NEXT_QUERY=0
 export __SAMP_NEXT_QUERY
 __SAMP_SERVER=0

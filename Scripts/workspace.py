@@ -43,7 +43,10 @@ print_export("TLIGPAC_DIR", data.get('include_dir', ''))
 print_export("TLIGPAC_PLUGINS", data.get('plugins_dir', ''))
 print_export("CHATBOT_TOKEN", data.get('bot_token', ''))
 print_export("CHATBOT_MODEL", data.get('bot_model', ''))
-print_export("CHATBOT_BIODATA", data.get('bot_profile', ''))
+print_export("__SAMP_LOG", data.get('samp_log', ''))
+print_export("SERVER_CONF", data.get('server_conf', ''))
+
+print_export("DEF_INCLUDE", data.get('include_paths', ''))
 
 amx_opt = data.get('amx_flags', [])
 print_export("AMX_OPT_F", ' '.join(amx_opt))
