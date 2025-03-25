@@ -4,6 +4,7 @@ import os
 import hashlib
 import json
 import sys
+import re # security for chatbot_token
 
 def double_sha256():
     """ Double SHA256 - simple, like blockchain """
@@ -56,8 +57,26 @@ print_export("DEF_EXCLUDE", exclude_flags)
 print_export("DEF_INCLUDE", data.get('include_paths', ''))
 print_export("TLIGPAC_DIR", data.get('include_dir', ''))
 print_export("__SAMP_PLUGIN_DIR", data.get('plugins_dir', ''))
-print_export("CHATBOT_TOKEN", data.get('bot_token', ''))
-print_export("CHATBOT_MODEL", data.get('bot_model', ''))
+
+# Define a regular expression that allows only alphanumeric characters, underscores, or hyphens
+valid_token_regex = re.compile("^[a-zA-Z0-9_-]{1,62}$")
+
+# Validate chatbot_token
+chatbot_token = data.get('bot_token', '')
+
+# Check if the token is valid
+if not valid_token_regex.match(chatbot_token):
+    print("Error: CHATBOT_TOKEN contains invalid characters.")
+    sys.exit(1)
+
+# Check if the token length is more than 62 characters
+if len(chatbot_token) > 62:
+    print("Error: CHATBOT_TOKEN exceeds 62 characters.")
+    sys.exit(1)
+
+# Export CHATBOT_TOKEN to bash environment variable
+print_export("CHATBOT_TOKEN", chatbot_token)
+
 print_export("__SAMP_LOG", data.get('samp_log', ''))
 print_export("SERVER_CONF", data.get('server_conf', ''))
 print_export("__SAMP_EXEC", data.get('samp_executable', ''))
