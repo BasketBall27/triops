@@ -671,7 +671,7 @@ mode_TRIOPS() {
                             wget -q --show-progress -O "server._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Server/server._"
                             wget -q --show-progress -O "misc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Misc/misc._"
                             wget -q --show-progress -O "compiler._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Compiler/compiler._"
-                            
+
                             ignore_this sleep 1 && cd "$shell_DIR" >/dev/null 2>&1 || echo ""
 
                             if [ "$main_commands" == "syncc" ]; then
@@ -872,7 +872,7 @@ except json.JSONDecodeError:
                 ["nano"]=":: GNU/Nano Editor - Usage: nano"
                 ["tligpac"]=":: Triops Mode to TligPac Mode - Usage: tligpac"\
                 ["sync"]=":: Sync Normal - Usage: sync"
-                ["syncc"]=":: Sync full - Usage: syncc"
+                ["syncc"]=":: Sync Full - Usage: syncc"
                 ["fetch"]=":: Fetch Triops -> Usage: fetch"
             )
             
@@ -935,11 +935,12 @@ function bash_help()
     echo " stop (stopped server), restart (restart server)"
     echo " gamemode, pawncc, clear (clear-screen), checksums"
     echo " fcheck (folder-checks), cat, tligpac, kill, directory"
+    echo " sync (update/upgrade), syncc (updates full)"
 
     if [ "$__DIS_GNU_NANO" == "true" ]; then
-        echo " sync (update/upgrade), syncc (updates full), exit, remcac, chatbot, fetch"
+        echo " exit, remcac, chatbot, fetch"
     else
-        echo " sync (update/upgrade), syncc (updates full), exit, remcac, chatbot, nano, fetch"
+        echo " exit, remcac, chatbot, nano, fetch"
     fi
 }
 
