@@ -1,15 +1,15 @@
 #!/usr/bin/bash
 
 function mode_TLIGPAC() {
-    : '
-        @mode.TLIGPAC
-    '
+    #
+    #   @mode.TLIGPAC
+    #
 
     save_TITLE "TligPac Mode"
 
-    : '
-        @Send.Permissions.Typing
-    '
+    #
+    #   @Send.Permissions.Typing
+    #
 
     echo -n "$(bash_coltext_y "$SHUSERS")"
     echo -n ":~$ "
@@ -33,17 +33,24 @@ function bash_TligPac()
 
             tligpac_repository_url="${tligpac_OPTION_FLAGS#"install "}"
             tligpac_repository_url="${tligpac_repository_url#install }"
-
+                        
+            # Check if the repository URL is non-empty and not equal to "install"
             if [[ -n "$tligpac_repository_url" && "$tligpac_repository_url" != "install" ]]; then
+                # If a valid repository URL is provided, store it in the tligpac_URLS array
                 tligpac_URLS=("$tligpac_repository_url")
             else
+                # If no valid repository URL, initialize an empty array for tligpac_URLS
                 tligpac_URLS=()
 
+                # Check if tligpac.json file exists
                 if [ -f "tligpac.json" ]; then
+                    # Read the "package" list from the JSON file and add each URL to the tligpac_URLS array
                     while IFS= read -r line; do
                         tligpac_URLS+=("$line")
                     done < <(python3 -c 'import json, sys; data = json.load(sys.stdin); print("\n".join(data["package"]))' < tligpac.json)
+                # Check if tligpac.toml file exists
                 elif [ -f "tligpac.toml" ]; then
+                    # Read the "urls" from the TOML file and add each URL to the tligpac_URLS array
                     while IFS= read -r line; do
                         tligpac_URLS+=("$line")
                     done < <(tomlq -r '.package.urls[]' tligpac.toml)
@@ -146,26 +153,44 @@ function bash_TligPac()
                    mkdir "$__SAMP_PLUGIN_DIR" >/dev/null 2>&1 || mkdir "plugins" >/dev/null 2>&1
                 fi
 
+                #
+                #   handle name / version.
+                #
+
+                # Extract the base name of the repository URL and remove the file extension (if any)
                 tligpac_PACKAGES=$(basename "$tligpac_repository_url")
                 tligpac_PACKAGES="${tligpac_PACKAGES%.*}"
+
+                # Initialize an empty variable for repository version
                 __tligpac_VERSION_REPO=""
 
+                # Check if the repository URL contains '/releases/tag/' or '/releases/download/'
+                # and extract the version information from the URL accordingly
                 if [[ "$tligpac_repository_url" == *"/releases/tag/"* ]]; then
+                    # If it's a tag release, the version is the last part of the URL
                     tligpac_VERSION_REPO=$(echo "$tligpac_repository_url" | awk -F '/' '{print $NF}')
                 elif [[ "$tligpac_repository_url" == *"/releases/download/"* ]]; then
+                    # If it's a download release, the version is the second-to-last part of the URL
                     tligpac_VERSION_REPO=$(echo "$tligpac_repository_url" | awk -F '/' '{print $(NF-1)}')
                 else
+                    # If neither tag nor download, set the version as "Unknown's"
                     tligpac_VERSION_REPO="Unknown's"
                 fi
 
+                # Remove the 'v' prefix if present in the version
                 tligpac_VERSION_REPO=${tligpac_VERSION_REPO#v}
+
+                # Store the version in another variable for later use
                 __tligpac_VERSION_REPO="$tligpac_VERSION_REPO"
 
+                # If the version doesn't contain any digits, mark it as an unknown version
                 if ! [[ "$tligpac_VERSION_REPO" =~ [0-9] ]]; then
+                    # If no version detected, clear the version variable and set it as "Unknown's"
                     tligpac_VERSION_REPO=""
                     __tligpac_VERSION_REPO="Unknown's"
                 fi
 
+                # If the package name wasn't extracted, set it as "Unknown's"
                 if [[ -z "$tligpac_PACKAGES" ]]; then
                     tligpac_PACKAGES="Unknown's"
                 fi
@@ -173,35 +198,49 @@ function bash_TligPac()
                 __tligpac_PACKAGES="$tligpac_PACKAGES"
 
                 sleep 0.1
-                
+
+                # Extract the package name from the repository URL by removing the file extension and hyphen
                 tligpac_PACKAGES=$(basename "$tligpac_repository_url")
                 tligpac_PACKAGES="${tligpac_PACKAGES%%-*}"
 
+                # Determine the archive file format based on the URL
+                # If the URL ends with .zip, set the archive file to be .zip
                 if [[ "$tligpac_archive_url" =~ \.zip$ ]]; then
                     tligpac_ARCHIVE_FILE="$__tligpac_PACKAGES.zip"
+                # If the URL ends with .tar.gz, set the archive file to be .tar.gz
                 elif [[ "$tligpac_archive_url" =~ \.tar\.gz$ ]]; then
                     tligpac_ARCHIVE_FILE="$__tligpac_PACKAGES.tar.gz"
+                # Default to .zip if neither .zip nor .tar.gz is detected
                 else
                     tligpac_ARCHIVE_FILE="$__tligpac_PACKAGES.zip"
                 fi
 
-                echo -e "$(bash_coltext_y "Downloading") $__tligpac_PACKAGES $tligpac_VERSION_REPO"
-                
+                # Inform the user that the download is starting
+                echo -e "$(bash_coltext_y "Downloading") $__tligpac_PACKAGES v$tligpac_VERSION_REPO"
+                                
+                # Download the archive using wget with progress showing
                 wget -q --show-progress -O "$tligpac_ARCHIVE_FILE" "$tligpac_archive_url"
 
+                # Check if the downloaded file is a ZIP archive
                 if file "$tligpac_ARCHIVE_FILE" | grep -q "Zip archive data"; then
+                    # If it's a ZIP file, unzip it to the extraction directory
                     unzip -q "$tligpac_ARCHIVE_FILE" -d "$tligpac_EXTRACT_DIR"
+                # Check if the downloaded file is a GZIP compressed TAR file
                 elif file "$tligpac_ARCHIVE_FILE" | grep -q "gzip compressed data"; then
+                    # If it's a TAR.GZ file, extract it to the extraction directory
                     mkdir -p "$tligpac_EXTRACT_DIR"
                     tar -xzf "$tligpac_ARCHIVE_FILE" -C "$tligpac_EXTRACT_DIR" --strip-components=1
                 else
+                    # If the downloaded file is neither a ZIP nor a TAR.GZ, report an error and clean up
                     echo -e "$(bash_coltext_r "crit:") Downloaded file is not a valid ZIP or TAR.GZ.."
                     rm -rf "$tligpac_ARCHIVE_FILE" "$tligpac_EXTRACT_DIR"
                     continue
                 fi
 
+                # Find the first subdirectory inside the extraction directory
                 tligpac_EXTRACT_SUBDIR=$(find "$tligpac_EXTRACT_DIR" -mindepth 1 -maxdepth 1 -type d | head -n 1)
-                
+
+                # If a subdirectory is found, move its contents to the extraction directory and delete the subdirectory
                 if [[ -d "$tligpac_EXTRACT_SUBDIR" ]]; then
                     mv "$tligpac_EXTRACT_SUBDIR"/* "$tligpac_EXTRACT_DIR/"
                     rm -rf "$tligpac_EXTRACT_SUBDIR"
@@ -211,12 +250,21 @@ function bash_TligPac()
                     find "$tligpac_EXTRACT_DIR" -type f -name "*.inc" | while IFS= read -r inc_file; do
                         tligpac_REAL_PATH=$(realpath --relative-to="$tligpac_EXTRACT_DIR" "$inc_file" 2> /dev/null || echo "$inc_file")
 
+                        # Check if $tligpac_REAL_PATH contains '/include/'
+                        # If it does, the part before '/include/' will be removed
+                        # This ensures we only get the path after 'include/'
                         if [[ "$tligpac_REAL_PATH" =~ (^|/)include/ ]]; then
                             tligpac_REAL_PATH="${tligpac_REAL_PATH#*include/}"
                         fi
+
+                        # Check if $tligpac_REAL_PATH contains '/' which indicates a more complete path
+                        # If there is a '/', we need to get the directory from $tligpac_REAL_PATH
+                        # $TLIGPAC_DIR will be combined with the directory of that path
                         if [[ "$tligpac_REAL_PATH" == */* ]]; then
                             tligpac_DEST_PATH="$TLIGPAC_DIR/$(dirname "$tligpac_REAL_PATH")"
                         else
+                            # If there is no '/', $tligpac_REAL_PATH is just a file name
+                            # So, we just point to the base directory $TLIGPAC_DIR
                             tligpac_DEST_PATH="$TLIGPAC_DIR"
                         fi
 
@@ -231,6 +279,7 @@ function bash_TligPac()
                 fi
             done
 
+            # end.
             echo -e "$(bash_coltext_y "[All packages installed]")"
 
             sleep 0.1
@@ -249,13 +298,21 @@ function bash_TligPac()
                 echo ":: Enter the name pattern of the include/plugin to remove:"
                 read -r -p ">>> " tligpac_REMOVE_PATTERN
             fi
-            
+
+            # Function to filter and remove files based on a pattern
+            # Takes one argument, a pattern, which will be used to match file names
             tligpac_FILTER_REMOVE_FILES() {
-                local pattern="$1"
+                local pattern="$1"  # Store the pattern in a local variable
+
+                # Read each line (file path) passed to the function
                 while read -r __file; do
-                    __filename=$(basename "$__file")
+                    __filename=$(basename "$__file")  # Extract the file name from the full path
+
+                    # Check if the file name matches the pattern
+                    # The pattern can optionally match a file extension (e.g., .txt or .md)
+                    # Also, it can match file names with an optional dash before the pattern
                     if [[ "$__filename" =~ ^$pattern(\.[a-z]+)?$ || "$__filename" =~ .*-?$pattern(\.[a-z]+)?$ ]]; then
-                        echo "$__file"
+                        echo "$__file"  # If it matches, print the full file path
                     fi
                 done
             }
@@ -279,20 +336,35 @@ function bash_TligPac()
             fi
 
 if [ __SAMP_SERVER == 1 ]; then
+            # Check if the $SERVER_CONF file exists
             if [[ -f "$SERVER_CONF" ]]; then
+                # Check if the 'plugins' entry exists in the $SERVER_CONF file
                 if grep -q "^plugins" "$SERVER_CONF"; then
+                    # Remove occurrences of $tligpac_REMOVE_PATTERN followed by .so, .dll, or no extension
+                    # The pattern is replaced globally in the file
                     sed -i "/^plugins /s/\b$tligpac_REMOVE_PATTERN\(\.so\|\.dll\|\)//g" "$SERVER_CONF"
+                    
+                    # Replace double spaces with single space throughout the file
                     sed -i 's/  / /g' "$SERVER_CONF"
+                    
+                    # Ensure that the 'plugins' entry is not an empty line
                     sed -i 's/^plugins *$/plugins /' "$SERVER_CONF"
+                    
+                    # Print a success message after the modifications
                     echo -e "$(bash_coltext_y "[OK] ") Removed $tligpac_REMOVE_PATTERN from $SERVER_CONF"
                 else
+                    # If no 'plugins' entry is found, print a debug message
                     echo -e "$(bash_coltext_y "dbg:") No 'plugins' entry found in $SERVER_CONF"
                 fi
             else
+                # If the $SERVER_CONF file does not exist, print a warning message
                 echo -e "$(bash_coltext_g "warn:") $SERVER_CONF not found"
             fi
 fi
-            
+
+            # end.
+            echo -e "$(bash_coltext_y "[OK] ") Removal process completed!"
+
             mode_TLIGPAC ""
             ;;
         "$shell_OPTION -C" | "clear" | "cc")

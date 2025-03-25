@@ -252,9 +252,9 @@ function bash_typeof() {
 export bash_typeof
 
 mode_TRIOPS() {
-    : '
-        @Send.OPS-Mode
-    '
+    #
+    #   @Send.OPS-Mode
+    #
 
     local commands_TRIGGER="ops"
 
