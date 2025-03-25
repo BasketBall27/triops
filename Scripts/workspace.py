@@ -72,9 +72,10 @@ if not valid_token_regex.match(chatbot_token):
 if len(chatbot_token) > 62:
     sys.exit(0)
 
-# Export CHATBOT_TOKEN to bash environment variable
-print_export("CHATBOT_TOKEN", chatbot_token)
-print_export("CHATBOT_MODEL", data.get('chatbot_model', ''))
+# Export other configuration values from the JSON file to bash environment variables
+print_export("CHATBOT_TOKEN", data.get('bot_token', ''))
+print_export("CHATBOT_MODEL", data.get('bot_model', ''))
+print_export("CHATBOT_BIODATA", data.get('bot_profile', ''))
 print_export("__SAMP_LOG", data.get('samp_log', ''))
 print_export("SERVER_CONF", data.get('server_conf', ''))
 print_export("__SAMP_EXEC", data.get('samp_executable', ''))
