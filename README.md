@@ -144,13 +144,14 @@ main() {
 | `amx_flags`      | Compiler flags for AMX. See [Here](https://github.com/vilksons/triops/wiki/Compiler-Option) for more. |
 | `include_paths`  | The default directory should be by the compiler.. |
 | `exclude_paths`  | Additional include directories for compilation. |
+| `samp_log`       | Log of Server Logs (SA-MP) |
+| `server_conf`    | Server Config name (SA-MP) |
+| `samp_executable`| Executable Name (SA-MP)
 | `include_dir`    | Main include directory for the package manager - (TligPac). |
 | `plugins_dir`    | Plugins directory for `.dll` and `.so` implementations - (Tligpac) |
 | `bot_token`      | API Key from [Groq Console](https://console.groq.com/keys). |
 | `bot_model`      | AI Model from [Groq Console](https://console.groq.com/). |
 | `bot_profile`    | Extra chatbot configuration. |
-| `samp_log`       | Log of Server Logs (SA-MP) |
-| `server_conf`    | Server Config name (SA-MP) |
 ---
 
 ## **Example: `include_paths` Usage**  
