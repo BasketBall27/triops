@@ -28,11 +28,11 @@ Before starting, ensure the following:
 - **Have the `triops/workspace` script**  
   - Download via GNU/Wget:
    ```sh
-   wget -q --show-progress -O workspace https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Scripts/workspace
+   wget -q --show-progress -O workspace https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Scripts/workspace
    ```
    - With skip installation
    ```sh
-   wget -q --show-progress -O workspace https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Scripts/workspace && \
+   wget -q --show-progress -O workspace https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Scripts/workspace && \
       chmod +x workspace && bash ./workspace
    ```
 - **Install required packages**  
@@ -115,20 +115,30 @@ main() {
 }
 ```
 
-## **Configuration (`lang.toml`)**
+## **Configuration (`lang.json`)**
 
-```toml
-amx_flags = ["-;+","-(+","-d3"]
-include_paths = "pawno/include"
-exclude_paths = ["includes", "includes2", "includes3"]
-samp_log = "server_log.txt"
-server_conf = "server.cfg"
-samp_executable = "samp03svr"
-include_dir = "pawno/include"
-plugins_dir = "plugins"
-bot_token = "gsk_abcd"
-bot_model = "qwen-2.5-32b"
-bot_profile = ""
+```json
+{
+    "amx_flags": [
+        "-;+",
+        "-(+",
+        "-d3"
+    ],
+    "include_paths": "pawno/include",
+    "exclude_paths": [
+        "includes",
+        "includes2",
+        "includes3"
+    ],
+    "samp_log": "server_log.txt",
+    "server_conf": "server.cfg",
+    "samp_executable": "samp03svr"
+    "include_dir": "pawno/include",
+    "plugins_dir": "plugins",
+    "bot_token": "gsk_abcd",
+    "bot_model": "qwen-2.5-32b",
+    "bot_profile": "",
+}
 ```
 
 ### **Configuration Details**  
@@ -149,7 +159,7 @@ bot_profile = ""
 ---
 
 ## **Example: `include_paths` Usage**  
-If a script inside `includes/` is not recognized, define `"include_paths": "includes"` in `lang.toml`.  
+If a script inside `includes/` is not recognized, define `"include_paths": "includes"` in `lang.json`.  
 
 ### **Example Directory Structure**  
 ```
@@ -165,7 +175,7 @@ samp-server/
 │
 └── server.cfg
 ```  
-Define `"include_paths": "includes"` in `lang.toml` if a script in `includes/` is ignored.
+Define `"include_paths": "includes"` in `lang.json` if a script in `includes/` is ignored.
 
 ---
 
