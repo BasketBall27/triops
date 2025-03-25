@@ -140,7 +140,7 @@ function load_module() {
         else
             source "$module_path"
         fi
-
+        
         clear
 
         if [ "$special_param" == "compat" ]; then 
@@ -166,30 +166,41 @@ function load_module() {
 
 loaded_all_modules()
 {
-    if [ ! -f "lang.json" ]; then
-    cat > lang.json <<EOF
+if [ ! -f "lang.toml" ]; then
+    if [ $__SAMP_SERVER == 1 ]; then
+    cat > lang.toml <<EOF
 {
-    "amx_flags": [
-        "-;+",
-        "-(+",
-        "-d3"
-    ],
-    "include_paths": "pawno/include",
-    "exclude_paths": [
-        "includes",
-        "includes2",
-        "includes3"
-    ],
-    "samp_log": "server_log.txt",
-    "server_conf": "server.cfg",
-    "samp_executable": "samp03svr",
-    "plugins_dir": "plugins",
-    "bot_token": "gsk_abcd",
-    "bot_model": "qwen-2.5-32b",
-    "bot_profile": ""
+amx_flags = ["-;+","-(+","-d3"]
+include_paths = "pawno/include"
+exclude_paths = ["includes", "includes2", "includes3"]
+samp_log = "server_log.txt"
+server_conf = "server.cfg"
+samp_executable = "samp03svr"
+include_dir = "pawno/include"
+plugins_dir = "plugins"
+bot_token = "gsk_abcd"
+bot_model = "qwen-2.5-32b"
+bot_profile = ""
+}
+EOF
+    elif [ $__SAMP_SERVER == 2 ]; then
+        cat > lang.toml <<EOF
+{
+amx_flags = ["-;+","-(+","-d3"]
+include_paths = "qawno/include"
+exclude_paths = ["includes", "includes2", "includes3"]
+samp_log = "log.txt"
+server_conf = "config.json"
+samp_executable = "omp-server"
+include_dir = "qawno/include"
+plugins_dir = "components"
+bot_token = "gsk_abcd"
+bot_model = "qwen-2.5-32b"
+bot_profile = ""
 }
 EOF
     fi
+fi
 
     # Recheck and reinstall
     if [ -f ".__update" ]; then
@@ -197,15 +208,15 @@ EOF
         rm -rf ".lib"
     fi
 
-    load_module ".workspace.py" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Scripts/workspace.py" ""
-    load_module ".lib/security._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Security/security._" ""
-    load_module ".lib/compat._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Compat/compat._" "compat"
-    load_module ".lib/tligpac._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/TligPac/tligpac._" ""
-    load_module ".lib/samp._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Package/samp._" ""
-    load_module ".lib/pawncc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Package/pawncc._" ""
-    load_module ".lib/misc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Misc/misc._" "" 
-    load_module ".lib/server._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Server/server._" ""
-    load_module ".lib/compiler._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Compiler/compiler._" "compiler"
+    load_module ".workspace.py" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Scripts/workspace.py" ""
+    load_module ".lib/security._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Security/security._" ""
+    load_module ".lib/compat._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Compat/compat._" "compat"
+    load_module ".lib/tligpac._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/testing/TligPac/tligpac._" ""
+    load_module ".lib/samp._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Package/samp._" ""
+    load_module ".lib/pawncc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Package/pawncc._" ""
+    load_module ".lib/misc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Misc/misc._" "" 
+    load_module ".lib/server._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Server/server._" ""
+    load_module ".lib/compiler._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Compiler/compiler._" "compiler"
 }
 
 function bash_typeof() {
@@ -239,6 +250,18 @@ function bash_typeof() {
         echo "Install first! See: https://github.com/vilksons/triops/wiki/Required-Packages"
         bash
     fi
+    
+    echo "AMX_FLAGS: $AMX_FLAGS"
+    echo "INCLUDE_PATHS: $INCLUDE_PATHS"
+    echo "EXCLUDE_PATHS: $EXCLUDE_PATHS"
+    echo "SAMP_LOG: $SAMP_LOG"
+    echo "SERVER_CONF: $SERVER_CONF"
+    echo "SAMP_EXECUTABLE: $SAMP_EXECUTABLE"
+    echo "INCLUDE_DIR: $INCLUDE_DIR"
+    echo "PLUGINS_DIR: $PLUGINS_DIR"
+    echo "BOT_TOKEN: $BOT_TOKEN"
+    echo "BOT_MODEL: $BOT_MODEL"
+    echo "BOT_PROFILE: $BOT_PROFILE"
     
     save_TITLE "OPS Mode"
 
@@ -675,20 +698,20 @@ mode_TRIOPS() {
                             
                             cd "$shell_DIR/.lib" >/dev/null 2>&1 || echo ""
 
-                            wget -q --show-progress -O "security._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Security/security._" || touch ".__update"
-                            wget -q --show-progress -O "compat._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Compat/compat._" || touch ".__update"
-                            wget -q --show-progress -O "tligpac._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/TligPac/tligpac._" || touch ".__update"
-                            wget -q --show-progress -O "samp._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Package/samp._" || touch ".__update"
-                            wget -q --show-progress -O "pawncc._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Package/pawncc._" || touch ".__update"
-                            wget -q --show-progress -O "server._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Server/server._" || touch ".__update"
-                            wget -q --show-progress -O "misc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Misc/misc._" || touch ".__update"
-                            wget -q --show-progress -O "compiler._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Compiler/compiler._" || touch ".__update"
+                            wget -q --show-progress -O "security._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/testing/Security/security._" || touch ".__update"
+                            wget -q --show-progress -O "compat._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/testing/Compat/compat._" || touch ".__update"
+                            wget -q --show-progress -O "tligpac._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/testing/TligPac/tligpac._" || touch ".__update"
+                            wget -q --show-progress -O "samp._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/testing/Package/samp._" || touch ".__update"
+                            wget -q --show-progress -O "pawncc._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/testing/Package/pawncc._" || touch ".__update"
+                            wget -q --show-progress -O "server._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/testing/Server/server._" || touch ".__update"
+                            wget -q --show-progress -O "misc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Misc/misc._" || touch ".__update"
+                            wget -q --show-progress -O "compiler._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/testing/Compiler/compiler._" || touch ".__update"
 
                             ignore_this sleep 1 && cd "$shell_DIR" >/dev/null 2>&1 || echo ""
 
                             if [ "$main_commands" == "syncc" ]; then
-                                wget -q --show-progress -O ".workspace.py" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Scripts/workspace.py"
-                                wget -q --show-progress -O "workspace" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Scripts/workspace"
+                                wget -q --show-progress -O ".workspace.py" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/testing/Scripts/workspace.py"
+                                wget -q --show-progress -O "workspace" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/testing/Scripts/workspace"
                             fi
 
                             echo "$__lat" > "$shell_DIR/.commits"
