@@ -14,7 +14,7 @@ Essential references to understand and use Triops:
 ---
 
 **What is Triops?**  
-Triops is an SA:MP-specific toolchain designed for debugging and compiling. It is primarily built using Bash (90%) with some Python3 usage.
+Triops is an SA:MP-specific toolchain designed for debugging, compiling and packet manager. It is primarily built using Bash (90%) with some Python3 usage.
 
 ---
 
