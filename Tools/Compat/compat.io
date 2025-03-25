@@ -71,7 +71,7 @@ __handleOS() {
             done
         fi
         
-        if [[ -n "$SAMP_FOUND" ]]; then
+        if [[ "$__SAMP_EXEC" == "samp03svr" || "$__SAMP_EXEC" == "samp-server.exe" ]; then
             __SAMP_SERVER=1
             __CONF_SAMP ""
         else
