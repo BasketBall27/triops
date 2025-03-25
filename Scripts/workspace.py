@@ -35,7 +35,7 @@ def load_json():
     except Exception as e:
         # Print an error message and exit the script if there is an issue loading the JSON file
         print(f"Error loading JSON: {e}")
-        sys.exit(1)
+        sys.exit(0)
 
 # Load the data from the lang.json file
 data = load_json()
@@ -66,13 +66,11 @@ chatbot_token = data.get('bot_token', '')
 
 # Check if the token is valid
 if not valid_token_regex.match(chatbot_token):
-    print("Error: CHATBOT_TOKEN contains invalid characters.")
-    sys.exit(1)
+    sys.exit(0)
 
 # Check if the token length is more than 62 characters
 if len(chatbot_token) > 62:
-    print("Error: CHATBOT_TOKEN exceeds 62 characters.")
-    sys.exit(1)
+    sys.exit(0)
 
 # Export CHATBOT_TOKEN to bash environment variable
 print_export("CHATBOT_TOKEN", chatbot_token)

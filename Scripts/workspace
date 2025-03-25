@@ -769,7 +769,7 @@ mode_TRIOPS() {
 import sys, json
 try:
     data = json.load(sys.stdin)
-    print(data.get('choices', [{}])[0].get('message', {}).get('content', 'Error: Key not found'))
+    print(data.get('choices', [{}])[0].get('message', {}).get('content', 'Error: Response API Failed/not found.'))
 except json.JSONDecodeError:
     print('Error: Invalid JSON')
 "
