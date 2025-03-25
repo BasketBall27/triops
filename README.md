@@ -132,12 +132,12 @@ main() {
     ],
     "samp_log": "server_log.txt",
     "server_conf": "server.cfg",
-    "samp_executable": "samp03svr"
+    "samp_executable": "samp03svr",
     "include_dir": "pawno/include",
     "plugins_dir": "plugins",
     "bot_token": "gsk_abcd",
     "bot_model": "qwen-2.5-32b",
-    "bot_profile": "",
+    "bot_profile": ""
 }
 ```
 

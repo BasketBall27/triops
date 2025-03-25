@@ -105,12 +105,12 @@ if [ ! -f "lang.json" ]; then
     ],
     "samp_log": "server_log.txt",
     "server_conf": "server.cfg",
-    "samp_executable": "samp03svr"
+    "samp_executable": "samp03svr",
     "include_dir": "pawno/include",
     "plugins_dir": "plugins",
     "bot_token": "gsk_abcd",
     "bot_model": "qwen-2.5-32b",
-    "bot_profile": "",
+    "bot_profile": ""
 }
 EOF
     elif [ $__SAMP_SERVER == 2 ]; then
@@ -129,12 +129,12 @@ EOF
     ],
     "samp_log": "log.txt",
     "server_conf": "config.json",
-    "samp_executable": "omp-server"
+    "samp_executable": "omp-server",
     "include_dir": "qawno/include",
     "plugins_dir": "components",
     "bot_token": "gsk_abcd",
     "bot_model": "qwen-2.5-32b",
-    "bot_profile": "",
+    "bot_profile": ""
 }
 EOF
     fi
