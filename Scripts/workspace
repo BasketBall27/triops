@@ -194,11 +194,11 @@ EOF
     load_module ".workspace.py" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Scripts/workspace.py" ""
     load_module ".lib/security._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Security/security._" ""
     load_module ".lib/compat._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Compat/compat._" "compat"
-    load_module ".lib/tligpac._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/TligPac/tligpac._" ""
+    load_module ".lib/tligpac.io" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/TligPac/tligpac.io" ""
     load_module ".lib/samp._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Package/samp._" ""
     load_module ".lib/pawncc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Package/pawncc._" ""
     load_module ".lib/misc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Misc/misc._" "" 
-    load_module ".lib/server._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Server/server._" ""
+    load_module ".lib/server.io" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Server/server.io" ""
     load_module ".lib/compiler._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Compiler/compiler._" "compiler"
 }
 
@@ -629,8 +629,12 @@ mode_TRIOPS() {
             chmod +x "$shell_NAME"
             bash ./"$shell_NAME"
             ;;
-        "sync")
-            save_TITLE "Sync"
+        "sync" | "syncc")
+            if [ "$main_commands" == "sync" ]; then
+                save_TITLE "Sync"
+            elif [ "$main_commands" == "syncc" ]; then
+                save_TITLE "Syncc"
+            fi
 
             __lat=$(curl -s "https://api.github.com/repos/vilksons/triops/commits/main" | grep -o '"sha": "[^"]*' | awk -F': "' '{print $2}')
 
@@ -645,11 +649,14 @@ mode_TRIOPS() {
                 
                 read -r -n1 -p ":: Do you want to continue Sync Triops? [y/n] " PERMISSION_NEED_S
 
+                echo
                 [[ -z "$PERMISSION_NEED_S" ]] && PERMISSION_NEED_S="Y"
 
                 while true; do
                     case "$PERMISSION_NEED_S" in
                         [Yy])
+                            rm -rf ".lib" && mkdir ".lib"
+
                             echo "Updating..."
                             
                             echo "$__lat" > "$shell_DIR/.commits"
@@ -658,18 +665,19 @@ mode_TRIOPS() {
 
                             wget -q --show-progress -O "security._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Security/security._"
                             wget -q --show-progress -O "compat._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Compat/compat._"
-                            wget -q --show-progress -O "tligpac._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/TligPac/tligpac._"
+                            wget -q --show-progress -O "tligpac.io" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/TligPac/tligpac.io"
                             wget -q --show-progress -O "samp._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Package/samp._"
                             wget -q --show-progress -O "pawncc._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Package/pawncc._"
-                            wget -q --show-progress -O "server._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Server/server._"
+                            wget -q --show-progress -O "server.io" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Server/server.io"
                             wget -q --show-progress -O "misc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Misc/misc._"
                             wget -q --show-progress -O "compiler._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Compiler/compiler._"
 
-                            ignore_this sleep 1 && cd "$shell_DIR" >/dev/null 2>&1 || echo ""
+                            if [ "$main_commands" == "syncc" ]; then
+                                ignore_this sleep 1 && cd "$shell_DIR" >/dev/null 2>&1 || echo ""
+                                wget -q --show-progress -O ".workspace.py" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Scripts/workspace.py"
+                                wget -q --show-progress -O "workspace" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Scripts/workspace"
+                            fi
 
-                            wget -q --show-progress -O ".workspace.py" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Scripts/workspace.py"
-                            wget -q --show-progress -O "workspace" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Scripts/workspace"
-                            
                             echo "$__lat" > "$shell_DIR/.commits"
 
                             sleep 1 && bash ./workspace
@@ -807,6 +815,7 @@ except json.JSONDecodeError:
             echo -e "$(bash_coltext_a ":: Cache Dir: $shell_DIR/.cache")"
             read -r -p ":: Do you want to remove ALL files from cache? [y/n] " PERMISSION_NEED_RC
 
+            echo
             [[ -z "$PERMISSION_NEED_RC" ]] && PERMISSION_NEED_RC="Y"
 
             while true; do
@@ -860,7 +869,9 @@ except json.JSONDecodeError:
                 ["remcac"]=":: Remove cache \".cache\" Triops - Usage: remcac"
                 ["chatbot"]=":: Chatbot Terminal - Usage: chatbot"
                 ["nano"]=":: GNU/Nano Editor - Usage: nano"
-                ["tligpac"]=":: Triops Mode to TligPac Mode - Usage: tligpac"
+                ["tligpac"]=":: Triops Mode to TligPac Mode - Usage: tligpac"\
+                ["sync"]=":: Sync Normal - Usage: sync"
+                ["syncc"]=":: Sync full - Usage: syncc"
                 ["fetch"]=":: Fetch Triops -> Usage: fetch"
             )
             
@@ -925,9 +936,9 @@ function bash_help()
     echo " fcheck (folder-checks), cat, tligpac, kill, directory"
 
     if [ "$__DIS_GNU_NANO" == "true" ]; then
-        echo " sync (update/upgrade), exit, remcac, chatbot, fetch"
+        echo " sync (update/upgrade), syncc (updates full), exit, remcac, chatbot, fetch"
     else
-        echo " sync (update/upgrade), exit, remcac, chatbot, nano, fetch"
+        echo " sync (update/upgrade), syncc (updates full), exit, remcac, chatbot, nano, fetch"
     fi
 }
 
