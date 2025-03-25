@@ -132,10 +132,20 @@ function space_wargs_servers() {
     fi
 
     mv $SERVER_CONF $SERVER_CONF.bak
-    
 
     if [ "$SERVER_CONF" == "config.json" ]; then
-        sed -E 's/"main_scripts": \[[^]]*\]/"main_scripts": ["'"$commands_INPUT"'"]/' config.json > temp.json && mv temp.json config.json
+    
+    cat $SERVER_CONF.bak > $SERVER_CONF
+    
+python -c '
+import json
+f = "config.json"
+with open(f) as file:
+    data = json.load(file)
+data["main_scripts"] = ["'"$commands_INPUT"'"]
+with open(f, "w") as file:
+    json.dump(data, file, indent=2)
+'
     elif [ "$SERVER_CONF" == "server.cfg" ]; then
     awk -v new_gamemode="$commands_INPUT" '
         /^gamemode0 / {$2=new_gamemode} 1' $SERVER_CONF.bak > $SERVER_CONF || \
@@ -284,7 +294,7 @@ start_true3() {
     invalid_cache ""
 
 if [ $__SAMP_NEXT_QUERY == 1 ]; then
-    rm -f $SERVER_CONF
+    rm $SERVER_CONF
     mv $SERVER_CONF.bak $SERVER_CONF
     echo "Original $SERVER_CONF has been restored."
 fi
@@ -300,7 +310,7 @@ start_false3() {
     echo
 
 if [ $__SAMP_NEXT_QUERY == 1 ]; then
-    rm -f $SERVER_CONF
+    rm $SERVER_CONF
     mv $SERVER_CONF.bak $SERVER_CONF
     echo "Original $SERVER_CONF has been restored."
 fi

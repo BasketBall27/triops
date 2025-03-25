@@ -70,8 +70,6 @@ __handleOS() {
                 esac
             done
         fi
-
-        __CONF_SAMP_NC ""
         
         if [ "$__SAMP_EXEC" == "samp03svr" ] || [ "$__SAMP_EXEC" == "samp-server.exe" ]; then
             __SAMP_SERVER=1
@@ -79,35 +77,4 @@ __handleOS() {
             __SAMP_SERVER=2
         fi
     fi
-}
-
-__CONF_SAMP_NC() {
-    if [ ! -f "lang.json" ]; then
-        python3 -c '
-import json
-data = {
-    "amx_flags": [
-        "-;+",
-        "-(+",
-        "-d3"
-    ],
-    "include_paths": "pawno/include",
-    "exclude_paths": [
-        "includes",
-        "includes2",
-        "includes3"
-    ],
-    "samp_log": "server_log.txt",
-    "server_conf": "server.cfg",
-    "samp_executable": "samp03svr"
-    "include_dir": "pawno/include",
-    "plugins_dir": "plugins",
-    "bot_token": "gsk_abcd",
-    "bot_model": "qwen-2.5-32b",
-    "bot_profile": "",
-}
-with open("lang.json", "w") as f:
-    json.dump(data, f, indent=4)
-'
-fi
 }

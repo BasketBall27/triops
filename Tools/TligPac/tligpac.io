@@ -282,7 +282,20 @@ elif [ $__SAMP_SERVER == 2 ]; then
                 if [ ${#_tligpac_NEWPLG[@]} -gt 0 ]; then
                     tligpac_UPDATED_PLUGINS=$(echo "$_tligpac_EXTPLG" "${_tligpac_NEWPLG[@]}" | tr ' ' '\n' | sort -u | tr '\n' ',' | sed 's/,$//')
 
-                    sed -i -E "s/\"legacy_plugins\": \[.*\]/\"legacy_plugins\": [${tligpac_UPDATED_PLUGINS}]/" config.json
+                    python3 -c '
+import json
+import re
+
+f = "config.json"
+with open(f) as file:
+    data = file.read()
+
+data = re.sub(r"\"legacy_plugins\": \[.*?\]", f"\"legacy_plugins\": [{tligpac_UPDATED_PLUGINS}]", data)
+
+with open(f, "w") as file:
+    file.write(data)
+'
+
 
                     echo "Added new plugins to config.json: ${_tligpac_NEWPLG[*]}"
                 else
@@ -292,8 +305,6 @@ elif [ $__SAMP_SERVER == 2 ]; then
                 echo -e "$(bash_coltext_y "dbg:") No valid plugins found in $__tligpac_PACKAGES."
             fi
 fi
-
-            echo -e "$(bash_coltext_y "[OK] ") Removal process completed!"
             
             mode_TLIGPAC ""
             ;;
