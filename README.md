@@ -18,8 +18,6 @@ Triops is an SA:MP-specific toolchain designed for debugging and compiling. It i
 
 ---
 
----
-
 **Up-To-Date**
 always Updates with `sync` or `syncc` to Updates full.
 
