@@ -279,3 +279,8 @@ urls = [
 - This guide ensures a smooth setup and usage of Triops.  
 - Keep your environment updated and refer to the [Wiki](https://github.com/vilksons/triops/wiki) for further details.  
 - For issues, check the [Triops GitHub Discussions](https://github.com/vilksons/triops/discussions) or report bugs via GitHub Issues.
+
+| SA-MP               | open.MP | Key Features |
+|-------------------|------------| ------ |
+| Yes | No | TligPac auto Name plugins |
+| Yes | Yes | TligPac auto Paste Plugins/Includes |
