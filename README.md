@@ -28,11 +28,11 @@ Before starting, ensure the following:
 - **Have the `triops/workspace` script**  
   - Download via GNU/Wget:
    ```sh
-   wget -q --show-progress -O workspace https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Scripts/workspace
+   wget -q --show-progress -O workspace https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Scripts/workspace
    ```
    - With skip installation
    ```sh
-   wget -q --show-progress -O workspace https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Scripts/workspace && \
+   wget -q --show-progress -O workspace https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Scripts/workspace && \
       chmod +x workspace && bash ./workspace
    ```
 - **Install required packages**  
