@@ -935,7 +935,7 @@ function bash_help()
     echo " stop (stopped server), restart (restart server)"
     echo " gamemode, pawncc, clear (clear-screen), checksums"
     echo " fcheck (folder-checks), cat, tligpac, kill, directory"
-    echo " sync (update/upgrade), syncc (updates full)"
+    echo " sync (update/upgrade), syncc (update/upgrade full)"
 
     if [ "$__DIS_GNU_NANO" == "true" ]; then
         echo " exit, remcac, chatbot, fetch"
