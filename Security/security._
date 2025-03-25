@@ -5,6 +5,7 @@
     Generate a random 32-byte hex string and hash it twice using SHA256
 '
 save_LOCK_NAME=".bash_hashing.lock"
+export save_LOCK_NAME
 save_LOCK_NAME_SERVER=".server_hashing.lock"
 export save_LOCK_NAME_SERVER
 
