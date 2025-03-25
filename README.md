@@ -7,7 +7,6 @@ Essential references to understand and use Triops:
 - [Licenses](https://github.com/vilksons/triops/wiki/Licenses)                      Licenses
 - [Compiler Options](https://github.com/vilksons/triops/wiki/Compiler-Option)       Compiler AMX Options
 - [VSCode Tasks](https://github.com/vilksons/triops/wiki/VSCode-Tasks)              VSCode Tasks
-- [Up-To-Date](https://github.com/vilksons/triops/wiki/Up%E2%80%90To%E2%80%90Date)  Up-To-Date
 - [Required Packages](https://github.com/vilksons/triops/wiki/Required-Packages)    Required Packages
 - [PawnCC Installation](https://github.com/vilksons/triops/wiki/PawnCC-Installation) PawnCC Installation
 - [Code of Conduct](https://github.com/vilksons/triops/wiki/CODE-OF-CONDUCT)        Code of Conduct

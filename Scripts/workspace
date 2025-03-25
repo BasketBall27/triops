@@ -671,9 +671,10 @@ mode_TRIOPS() {
                             wget -q --show-progress -O "server._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Server/server._"
                             wget -q --show-progress -O "misc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/main/Misc/misc._"
                             wget -q --show-progress -O "compiler._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Compiler/compiler._"
+                            
+                            ignore_this sleep 1 && cd "$shell_DIR" >/dev/null 2>&1 || echo ""
 
                             if [ "$main_commands" == "syncc" ]; then
-                                ignore_this sleep 1 && cd "$shell_DIR" >/dev/null 2>&1 || echo ""
                                 wget -q --show-progress -O ".workspace.py" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Scripts/workspace.py"
                                 wget -q --show-progress -O "workspace" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/main/Scripts/workspace"
                             fi
