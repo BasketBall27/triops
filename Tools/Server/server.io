@@ -134,10 +134,9 @@ function space_wargs_servers() {
     mv $SERVER_CONF $SERVER_CONF.bak
 
     if [ "$SERVER_CONF" == "config.json" ]; then
-    
-    cat $SERVER_CONF.bak > $SERVER_CONF
-    
-python -c '
+        cat $SERVER_CONF.bak > $SERVER_CONF
+        
+        python -c '
 import json
 f = "config.json"
 with open(f) as file:
@@ -145,11 +144,11 @@ with open(f) as file:
 data["main_scripts"] = ["'"$commands_INPUT"'"]
 with open(f, "w") as file:
     json.dump(data, file, indent=2)
-'
+        '
     elif [ "$SERVER_CONF" == "server.cfg" ]; then
-    awk -v new_gamemode="$commands_INPUT" '
-        /^gamemode0 / {$2=new_gamemode} 1' $SERVER_CONF.bak > $SERVER_CONF || \
-            sed -E "s/^(gamemode0 )[0-9]+/\1$commands_INPUT/" $SERVER_CONF.bak > $SERVER_CONF
+        awk -v new_gamemode="$commands_INPUT" '
+            /^gamemode0 / {$2=new_gamemode} 1' $SERVER_CONF.bak > $SERVER_CONF || \
+                sed -E "s/^(gamemode0 )[0-9]+/\1$commands_INPUT/" $SERVER_CONF.bak > $SERVER_CONF
     fi
 
     echo ":: New $SERVER_CONF created with gamemode: $commands_INPUT"

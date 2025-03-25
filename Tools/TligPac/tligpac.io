@@ -141,8 +141,9 @@ function bash_TligPac()
                         TLIGPAC_DIR="pawno/include"
                     fi
                 fi
+
                 if [ ! -f "$__SAMP_PLUGIN_DIR" ]; then
-                   mkdir -p "$__SAMP_PLUGIN_DIR"
+                   mkdir "$__SAMP_PLUGIN_DIR" >/dev/null 2>&1 || mkdir "plugins" >/dev/null 2>&1
                 fi
 
                 tligpac_PACKAGES=$(basename "$tligpac_repository_url")
@@ -234,78 +235,6 @@ function bash_TligPac()
 
             sleep 0.1
 
-            tligpac_NEWPLG=()
-            
-            while IFS= read -r line; do
-                if [[ "$line" =~ \.so$|\.dll$ ]]; then
-                    plugin_name="$(basename "$line" | sed 's/\.[^.]*$//')"
-                    tligpac_NEWPLG+=("$plugin_name")
-                fi
-            done < "$__tligpac_PACKAGES"
-
-if [ $__SAMP_SERVER == 1 ]; then
-            if [ ${#tligpac_NEWPLG[@]} -gt 0 ]; then
-                if ! grep -q "^plugins " "$SERVER_CONF"; then
-                    sed -i '1i plugins ' "$SERVER_CONF"
-                fi
-                
-                _tligpac_EXTPLG=$(grep -oP '(?<=plugins ).*' "$SERVER_CONF" | tr ' ' '\n' | sort -u)
-
-                _tligpac_NEWPLG=()
-                for PLUGIN in "${tligpac_NEWPLG[@]}"; do
-                    if ! echo "$_tligpac_EXTPLG" | grep -qx "$PLUGIN"; then
-                        _tligpac_NEWPLG+=("$PLUGIN")
-                    fi
-                done
-
-                if [ ${#_tligpac_NEWPLG[@]} -gt 0 ]; then
-                    tligpac_UPDATED_PLUGINS=$(echo "$_tligpac_EXTPLG" "${_tligpac_NEWPLG[@]}" | tr '\n' ' ' | xargs -n1 | sort -u | xargs)
-                    sed -i "s/^plugins .*/plugins $tligpac_UPDATED_PLUGINS/" "$SERVER_CONF"
-                    echo " Added new plugins to $SERVER_CONF: ${_tligpac_NEWPLG[*]}"
-                else
-                    echo -e "$(bash_coltext_y "dbg:") No new plugins need to be added."
-                fi
-            else
-                echo -e "$(bash_coltext_y "dbg:") No valid plugins found in $__tligpac_PACKAGES."
-            fi
-elif [ $__SAMP_SERVER == 2 ]; then
-            if [ ${#tligpac_NEWPLG[@]} -gt 0 ]; then
-                _tligpac_EXTPLG=$(sed -nE 's/"legacy_plugins": \[(.*)\]/\1/p' config.json | tr -d '"' | tr ',' '\n' | sort -u)
-
-                _tligpac_NEWPLG=()
-                for PLUGIN in "${tligpac_NEWPLG[@]}"; do
-                    if ! echo "$_tligpac_EXTPLG" | grep -qx "$PLUGIN"; then
-                        _tligpac_NEWPLG+=("$PLUGIN")
-                    fi
-                done
-
-                if [ ${#_tligpac_NEWPLG[@]} -gt 0 ]; then
-                    tligpac_UPDATED_PLUGINS=$(echo "$_tligpac_EXTPLG" "${_tligpac_NEWPLG[@]}" | tr ' ' '\n' | sort -u | tr '\n' ',' | sed 's/,$//')
-
-                    python3 -c '
-import json
-import re
-
-f = "config.json"
-with open(f) as file:
-    data = file.read()
-
-data = re.sub(r"\"legacy_plugins\": \[.*?\]", f"\"legacy_plugins\": [{tligpac_UPDATED_PLUGINS}]", data)
-
-with open(f, "w") as file:
-    file.write(data)
-'
-
-
-                    echo "Added new plugins to config.json: ${_tligpac_NEWPLG[*]}"
-                else
-                    echo -e "$(bash_coltext_y "dbg:") No new plugins need to be added."
-                fi
-            else
-                echo -e "$(bash_coltext_y "dbg:") No valid plugins found in $__tligpac_PACKAGES."
-            fi
-fi
-            
             mode_TLIGPAC ""
             ;;
         "remove"*)
