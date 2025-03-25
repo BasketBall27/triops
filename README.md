@@ -18,6 +18,13 @@ Triops is an SA:MP-specific toolchain designed for debugging and compiling. It i
 
 ---
 
+---
+
+**Up-To-Date**
+Alwalys Updates with `sync` or `syncc` to Updates full.
+
+---
+
 ## **Prerequisites**  
 Before starting, ensure the following:  
 - **Have the `triops/workspace` script**  
