@@ -130,7 +130,10 @@ main() {
     "plugins_dir": "plugins",
     "bot_token": "gsk_abcd",
     "bot_model": "qwen-2.5-32b",
-    "bot_profile": ""
+    "bot_profile": "",
+    "samp_log": "server_log.txt",
+    "server_conf": "server.cfg"
+}
 }
 ```
 
