@@ -29,7 +29,10 @@ security_file_rm()
 {
     : ' Remove File Logs '
     cd "$shell_DIR" >/dev/null 2>&1 || echo "" &&
-    ignore_this rm ".cache"
+
+    if [ "$__REMCACHE" == "true" ]; then
+        ignore_this rm ".cache"
+    fi
 
     if [ -f "$__SAMP_LOG" ]; then
         ignore_this rm "$__SAMP_LOG"

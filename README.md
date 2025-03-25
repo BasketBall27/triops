@@ -137,7 +137,8 @@ main() {
     "plugins_dir": "plugins",
     "bot_token": "gsk_abcd",
     "bot_model": "qwen-2.5-32b",
-    "bot_profile": ""
+    "bot_profile": "",
+    "remcache_auto": "true"
 }
 ```
 
@@ -156,6 +157,7 @@ main() {
 | `bot_token`      | API Key from [Groq Console](https://console.groq.com/keys). |
 | `bot_model`      | AI Model from [Groq Console](https://console.groq.com/). |
 | `bot_profile`    | Extra chatbot configuration. |
+| `remcache_auto` | Auto Remove Cache `/.cache` if exit from Triops - `true` | `false` |
 ---
 
 ## **Example: `include_paths` Usage**  

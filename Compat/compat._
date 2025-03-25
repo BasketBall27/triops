@@ -110,7 +110,8 @@ if [ ! -f "lang.json" ]; then
     "plugins_dir": "plugins",
     "bot_token": "gsk_abcd",
     "bot_model": "qwen-2.5-32b",
-    "bot_profile": ""
+    "bot_profile": "",
+    "remcache_auto": "true"
 }
 EOF
     elif [ $__SAMP_SERVER == 2 ]; then
@@ -134,7 +135,8 @@ EOF
     "plugins_dir": "components",
     "bot_token": "gsk_abcd",
     "bot_model": "qwen-2.5-32b",
-    "bot_profile": ""
+    "bot_profile": "",
+    "remcache_auto": "true"
 }
 EOF
     fi

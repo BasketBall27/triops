@@ -219,7 +219,7 @@ function bash_TligPac()
                 echo -e "$(bash_coltext_y "Downloading") $__tligpac_PACKAGES v$tligpac_VERSION_REPO"
                                 
                 # Download the archive using wget with progress showing
-                wget -q --show-progress -O "$tligpac_ARCHIVE_FILE" "$tligpac_archive_url"
+                wget -q --show-progress -O "$tligpac_ARCHIVE_FILE" "$tligpac_archive_url" 2>&1 | tee "$shell_DIR/.cache/tligpac.log"
 
                 # Archive Check
                 if [ -f "$tligpac_ARCHIVE_FILE" ]; then

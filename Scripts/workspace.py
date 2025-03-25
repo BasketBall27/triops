@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 
+# Module for operating system interactions, such as reading files and generating random bytes
 import os
+# Module for hashing, used to create SHA256 hashes
 import hashlib
+# Module for working with JSON data, such as reading configuration files
 import json
+# Module for interacting with the system, such as reading command-line arguments and exiting the script
 import sys
-import re # security for chatbot_token
+# Module for working with regular expressions (regex), used for chatbot_token security validation
+import re
 
 def double_sha256():
     """ Double SHA256 - simple, like blockchain """
@@ -61,6 +66,7 @@ print_export("CHATBOT_BIODATA", data.get('bot_profile', ''))
 print_export("__SAMP_LOG", data.get('samp_log', ''))
 print_export("SERVER_CONF", data.get('server_conf', ''))
 print_export("__SAMP_EXEC", data.get('samp_executable', ''))
+print_export("__REMCACHE", data.get('remcache_auto', ''))
 
 # Get the amx_flags and export them
 amx_opt = data.get('amx_flags', [])
