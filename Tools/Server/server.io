@@ -132,10 +132,15 @@ function space_wargs_servers() {
     fi
 
     mv $SERVER_CONF $SERVER_CONF.bak
-        
+    
+
+    if [ "$SERVER_CONF" == "config.json" ]; then
+        sed -E 's/"main_scripts": \[[^]]*\]/"main_scripts": ["'"$commands_INPUT"'"]/' config.json > temp.json && mv temp.json config.json
+    elif [ "$SERVER_CONF" == "server.cfg" ]; then
     awk -v new_gamemode="$commands_INPUT" '
         /^gamemode0 / {$2=new_gamemode} 1' $SERVER_CONF.bak > $SERVER_CONF || \
             sed -E "s/^(gamemode0 )[0-9]+/\1$commands_INPUT/" $SERVER_CONF.bak > $SERVER_CONF
+    fi
 
     echo ":: New $SERVER_CONF created with gamemode: $commands_INPUT"
     

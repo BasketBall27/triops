@@ -268,6 +268,29 @@ if [ $__SAMP_SERVER == 1 ]; then
             else
                 echo -e "$(bash_coltext_y "dbg:") No valid plugins found in $__tligpac_PACKAGES."
             fi
+elif [ $__SAMP_SERVER == 2 ]; then
+            if [ ${#tligpac_NEWPLG[@]} -gt 0 ]; then
+                _tligpac_EXTPLG=$(sed -nE 's/"legacy_plugins": \[(.*)\]/\1/p' config.json | tr -d '"' | tr ',' '\n' | sort -u)
+
+                _tligpac_NEWPLG=()
+                for PLUGIN in "${tligpac_NEWPLG[@]}"; do
+                    if ! echo "$_tligpac_EXTPLG" | grep -qx "$PLUGIN"; then
+                        _tligpac_NEWPLG+=("$PLUGIN")
+                    fi
+                done
+
+                if [ ${#_tligpac_NEWPLG[@]} -gt 0 ]; then
+                    tligpac_UPDATED_PLUGINS=$(echo "$_tligpac_EXTPLG" "${_tligpac_NEWPLG[@]}" | tr ' ' '\n' | sort -u | tr '\n' ',' | sed 's/,$//')
+
+                    sed -i -E "s/\"legacy_plugins\": \[.*\]/\"legacy_plugins\": [${tligpac_UPDATED_PLUGINS}]/" config.json
+
+                    echo "Added new plugins to config.json: ${_tligpac_NEWPLG[*]}"
+                else
+                    echo -e "$(bash_coltext_y "dbg:") No new plugins need to be added."
+                fi
+            else
+                echo -e "$(bash_coltext_y "dbg:") No valid plugins found in $__tligpac_PACKAGES."
+            fi
 fi
 
             echo -e "$(bash_coltext_y "[OK] ") Removal process completed!"

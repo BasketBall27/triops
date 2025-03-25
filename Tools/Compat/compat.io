@@ -70,12 +70,13 @@ __handleOS() {
                 esac
             done
         fi
+
+        __CONF_SAMP_NC ""
         
         if [ "$__SAMP_EXEC" == "samp03svr" ] || [ "$__SAMP_EXEC" == "samp-server.exe" ]; then
             __SAMP_SERVER=1
-            __CONF_SAMP_NC ""
-        else
-            __CONF_SAMP_NC ""
+        elif [ "$__SAMP_EXEC" == "omp-server" ] || [ "$__SAMP_EXEC" == "omp-server.exe" ]; then
+            __SAMP_SERVER=2
         fi
     fi
 }
