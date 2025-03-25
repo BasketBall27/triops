@@ -175,60 +175,6 @@ loaded_all_modules()
     load_module ".workspace.py" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Scripts/workspace.py" ""
     load_module ".lib/security._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Security/security._" ""
     load_module ".lib/compat._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Compat/compat._" "compat"
-
-
-if [ ! -f "lang.json" ]; then
-    if [ $__SAMP_SERVER == 1 ]; then
-    cat > lang.json <<EOF
-{
-    "amx_flags": [
-        "-;+",
-        "-(+",
-        "-d3"
-    ],
-    "include_paths": "pawno/include",
-    "exclude_paths": [
-        "includes",
-        "includes2",
-        "includes3"
-    ],
-    "samp_log": "server_log.txt",
-    "server_conf": "server.cfg",
-    "samp_executable": "samp03svr"
-    "include_dir": "pawno/include",
-    "plugins_dir": "plugins",
-    "bot_token": "gsk_abcd",
-    "bot_model": "qwen-2.5-32b",
-    "bot_profile": "",
-}
-EOF
-    elif [ $__SAMP_SERVER == 2 ]; then
-        cat > lang.json <<EOF
-{
-    "amx_flags": [
-        "-;+",
-        "-(+",
-        "-d3"
-    ],
-    "include_paths": "qawno/include",
-    "exclude_paths": [
-        "includes",
-        "includes2",
-        "includes3"
-    ],
-    "samp_log": "log.txt",
-    "server_conf": "config.json",
-    "samp_executable": "omp-server"
-    "include_dir": "qawno/include",
-    "plugins_dir": "components",
-    "bot_token": "gsk_abcd",
-    "bot_model": "qwen-2.5-32b",
-    "bot_profile": "",
-}
-EOF
-    fi
-fi
-
     load_module ".lib/tligpac._" "https://raw.githubusercontent.com/vilksons/Triops/refs/heads/testing/TligPac/tligpac._" ""
     load_module ".lib/samp._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Package/samp._" ""
     load_module ".lib/pawncc._" "https://raw.githubusercontent.com/vilksons/triops/refs/heads/testing/Package/pawncc._" ""
@@ -268,19 +214,12 @@ function bash_typeof() {
         echo "Install first! See: https://github.com/vilksons/triops/wiki/Required-Packages"
         bash
     fi
-    
-    echo "AMX_FLAGS: $AMX_FLAGS"
-    echo "INCLUDE_PATHS: $INCLUDE_PATHS"
-    echo "EXCLUDE_PATHS: $EXCLUDE_PATHS"
-    echo "SAMP_LOG: $SAMP_LOG"
-    echo "SERVER_CONF: $SERVER_CONF"
-    echo "SAMP_EXECUTABLE: $SAMP_EXECUTABLE"
-    echo "INCLUDE_DIR: $INCLUDE_DIR"
-    echo "PLUGINS_DIR: $PLUGINS_DIR"
-    echo "BOT_TOKEN: $BOT_TOKEN"
-    echo "BOT_MODEL: $BOT_MODEL"
-    echo "BOT_PROFILE: $BOT_PROFILE"
-
+echo "$DEF_EXCLUDE"
+echo "$DEF_INCLUDE"
+echo "$TLIGPAC_DIR"
+echo "$__SAMP_PLUGIN_DIR"
+echo "$CHATBOT_TOKEN"
+echo "$AMX_OPT_F"
     save_TITLE "OPS Mode"
 
     main_commands=""

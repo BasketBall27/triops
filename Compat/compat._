@@ -86,5 +86,58 @@ __handleOS() {
         else
             __SAMP_SERVER=1
         fi
+
+
+if [ ! -f "lang.json" ]; then
+    if [ $__SAMP_SERVER == 1 ]; then
+    cat > lang.json <<EOF
+{
+    "amx_flags": [
+        "-;+",
+        "-(+",
+        "-d3"
+    ],
+    "include_paths": "pawno/include",
+    "exclude_paths": [
+        "includes",
+        "includes2",
+        "includes3"
+    ],
+    "samp_log": "server_log.txt",
+    "server_conf": "server.cfg",
+    "samp_executable": "samp03svr"
+    "include_dir": "pawno/include",
+    "plugins_dir": "plugins",
+    "bot_token": "gsk_abcd",
+    "bot_model": "qwen-2.5-32b",
+    "bot_profile": "",
+}
+EOF
+    elif [ $__SAMP_SERVER == 2 ]; then
+        cat > lang.json <<EOF
+{
+    "amx_flags": [
+        "-;+",
+        "-(+",
+        "-d3"
+    ],
+    "include_paths": "qawno/include",
+    "exclude_paths": [
+        "includes",
+        "includes2",
+        "includes3"
+    ],
+    "samp_log": "log.txt",
+    "server_conf": "config.json",
+    "samp_executable": "omp-server"
+    "include_dir": "qawno/include",
+    "plugins_dir": "components",
+    "bot_token": "gsk_abcd",
+    "bot_model": "qwen-2.5-32b",
+    "bot_profile": "",
+}
+EOF
+    fi
+fi
     fi
 }
