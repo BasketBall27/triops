@@ -214,14 +214,41 @@ Packages can be installed by specifying their URL or file path.
     install github/samp-incognito/samp-streamer-plugin
     ```  
 
+--
+
+   ```diff
+   users@:~$ tligpac
+   users@:~$ install https://github.com/Y-Less/sscanf/releases/download/v2.13.8/sscanf-2.13.8-win32.zip
+   Downloading sscanf-2.13.8-win32 v2.13.8
+   sscanf-2.13.8-win32 100%[===================>] 241.99K   737KB/s    in 0.3s    
+   Complete!. Packages: sscanf-2.13.8-win32 | 2.13.8
+   [All packages installed]
+   ```
+
 ##### **Removing Packages**  
 
 * **Using `remove`:**  
 
     ```bash
     remove streamer
-    ```  
+    ``` 
+
+--
+
+   ```diff
+   users@:~$ remove sscanf
+   dbg: No matching include files found: sscanf
+   [OK]  Removed plugins: plugins/amxsscanf.dll
+   plugins/sscanf.dll
+   [OK]  Removal process completed!
+   users@:~$ remove sscanf2
+   [OK]  Removed includes: pawno/include/sscanf2.inc
+   dbg: No matching plugins files found: sscanf2
+   [OK]  Removal process completed!
+   ```
+
 ---
+
 #### **TligPac Configuration**  
 
 TligPac relies on the `tligpac.json` with python3 or `tligpac.toml` with tomlq configuration file, utilized when executing `$ install` without arguments.  
