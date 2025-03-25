@@ -71,20 +71,16 @@ __handleOS() {
             done
         fi
         
-        if [[ "$__SAMP_EXEC" == "samp03svr" || "$__SAMP_EXEC" == "samp-server.exe" ]; then
+        if [ "$__SAMP_EXEC" == "samp03svr" ] || [ "$__SAMP_EXEC" == "samp-server.exe" ]; then
             __SAMP_SERVER=1
-            __CONF_SAMP ""
+            __CONF_SAMP_NC ""
         else
-            echo -e "$(bash_coltext_r "crit:") server not found!. You can get this in \`gamemode\`"
-
-            __CONF_SAMP ""
-
-            sleep 1
+            __CONF_SAMP_NC ""
         fi
     fi
 }
 
-__CONF_SAMP() {
+__CONF_SAMP_NC() {
     if [ ! -f "lang.json" ]; then
         python3 -c '
 import json
