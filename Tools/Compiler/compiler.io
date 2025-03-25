@@ -52,22 +52,27 @@ function triops_compilers() {
             '
 
             for option in $AMX_OPT_F; do
+                # option checking
                 if [[ " ${valid_AMX_OPTION[*]} " != *" $option "* ]]; then
+                    # not valid
                     echo -e "$(bash_coltext_r "crit:") compiler option \`$option\` not found!"
                     echo -e "$(bash_coltext_y "info:") please see: github.com/vilksons/triops/wiki/Compiler-Option"
                     continue
                 fi
             done
 
+            # allow any subfolder that is inside the gamemodes folder.
             __SPECIAL_INCLUDE_DIR=$(find "gamemodes" -type d | tr '\n' ':')
             __SPECIAL_INCLUDE_DIR=${INCLUDE_DIRS%:}
             
+            # time milisec checking compiler
             start_time=$(date +%s%3N)
 
                 for _ in {1..10}; do
                     "$COMPILER_PAWNCC" -i"$DEF_INCLUDE" "$DEF_EXCLUDE" -i"$__SPECIAL_INCLUDE_DIR" "$COMPILED_FILES" -o"$AMX_O" "$AMX_OPT_F" > "$__cache_save" 2>&1
                 done
 
+            # end of process
             end_time=$(date +%s%3N)
 
             elapsed=$((end_time - start_time))

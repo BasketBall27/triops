@@ -221,20 +221,27 @@ function bash_TligPac()
                 # Download the archive using wget with progress showing
                 wget -q --show-progress -O "$tligpac_ARCHIVE_FILE" "$tligpac_archive_url"
 
-                # Check if the downloaded file is a ZIP archive
-                if file "$tligpac_ARCHIVE_FILE" | grep -q "Zip archive data"; then
-                    # If it's a ZIP file, unzip it to the extraction directory
-                    unzip -q "$tligpac_ARCHIVE_FILE" -d "$tligpac_EXTRACT_DIR"
-                # Check if the downloaded file is a GZIP compressed TAR file
-                elif file "$tligpac_ARCHIVE_FILE" | grep -q "gzip compressed data"; then
-                    # If it's a TAR.GZ file, extract it to the extraction directory
-                    mkdir -p "$tligpac_EXTRACT_DIR"
-                    tar -xzf "$tligpac_ARCHIVE_FILE" -C "$tligpac_EXTRACT_DIR" --strip-components=1
+                # Archive Check
+                if [ -f "$tligpac_ARCHIVE_FILE" ]; then
+                    # Check if the downloaded file is a ZIP archive
+                    if file "$tligpac_ARCHIVE_FILE" | grep -q "Zip archive data"; then
+                        # If it's a ZIP file, unzip it to the extraction directory
+                        unzip -q "$tligpac_ARCHIVE_FILE" -d "$tligpac_EXTRACT_DIR"
+                    # Check if the downloaded file is a GZIP compressed TAR file
+                    elif file "$tligpac_ARCHIVE_FILE" | grep -q "gzip compressed data"; then
+                        # If it's a TAR.GZ file, extract it to the extraction directory
+                        mkdir -p "$tligpac_EXTRACT_DIR"
+                        tar -xzf "$tligpac_ARCHIVE_FILE" -C "$tligpac_EXTRACT_DIR" --strip-components=1
+                    else
+                        # If the downloaded file is neither a ZIP nor a TAR.GZ, report an error and clean up
+                        echo -e "$(bash_coltext_r "crit:") Downloaded file is not a valid ZIP or TAR.GZ.."
+                        rm -rf "$tligpac_ARCHIVE_FILE" "$tligpac_EXTRACT_DIR"
+                        continue
+                    fi
                 else
-                    # If the downloaded file is neither a ZIP nor a TAR.GZ, report an error and clean up
-                    echo -e "$(bash_coltext_r "crit:") Downloaded file is not a valid ZIP or TAR.GZ.."
-                    rm -rf "$tligpac_ARCHIVE_FILE" "$tligpac_EXTRACT_DIR"
-                    continue
+                    # If not exist
+                    echo -e "$(bash_coltext_r "crit:") Download failed!. Check the installer"
+                    bash_end ""
                 fi
 
                 # Find the first subdirectory inside the extraction directory

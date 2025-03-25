@@ -134,8 +134,7 @@ function space_wargs_servers() {
     mv $SERVER_CONF $SERVER_CONF.bak
 
     if [ "$SERVER_CONF" == "config.json" ]; then
-        cat $SERVER_CONF.bak > $SERVER_CONF
-        
+        cat $SERVER_CONF.bak > $SERVER_CONF &&
         python -c '
 import json
 f = "config.json"
