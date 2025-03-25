@@ -1,6 +1,6 @@
 ## What is this?
 
-These is `Server._io_` module of Triops/Workspace.
+These is Server, module of Triops/Workspace.
 
 ## How does it work?
 
