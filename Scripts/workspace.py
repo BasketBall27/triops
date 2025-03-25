@@ -74,7 +74,7 @@ if len(chatbot_token) > 62:
 
 # Export CHATBOT_TOKEN to bash environment variable
 print_export("CHATBOT_TOKEN", chatbot_token)
-
+print_export("CHATBOT_MODEL", data.get('chatbot_model', ''))
 print_export("__SAMP_LOG", data.get('samp_log', ''))
 print_export("SERVER_CONF", data.get('server_conf', ''))
 print_export("__SAMP_EXEC", data.get('samp_executable', ''))
