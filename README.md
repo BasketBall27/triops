@@ -157,7 +157,7 @@ main() {
 | `bot_token`      | API Key from [Groq Console](https://console.groq.com/keys). |
 | `bot_model`      | AI Model from [Groq Console](https://console.groq.com/). |
 | `bot_profile`    | Extra chatbot configuration. |
-| `remcache_auto` | Auto Remove Cache `/.cache` if exit from Triops - `true` | `false` |
+| `remcache_auto` | Auto Remove Cache `/.cache` - `true` | `false` |
 ---
 
 ## **Example: `include_paths` Usage**  
