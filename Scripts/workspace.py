@@ -45,8 +45,7 @@ print_export("CHATBOT_TOKEN", data.get('bot_token', ''))
 print_export("CHATBOT_MODEL", data.get('bot_model', ''))
 print_export("__SAMP_LOG", data.get('samp_log', ''))
 print_export("SERVER_CONF", data.get('server_conf', ''))
-
-print_export("DEF_INCLUDE", data.get('include_paths', ''))
+print_export("__SAMP_EXEC", data.get('samp_executable', ''))
 
 amx_opt = data.get('amx_flags', [])
 print_export("AMX_OPT_F", ' '.join(amx_opt))
