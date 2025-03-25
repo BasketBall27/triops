@@ -245,6 +245,7 @@ mode_TRIOPS() {
             if [ $__DARWIN == 1 ]; then
                 ignore_this docker stop $__SAMP_EXEC
             elif [ "$__LINUX" == 1 ] || [ "$__WINDOWS" == 1 ]; then 
+                # shellcheck disable=SC2154
                 if [ -f "$save_LOCK_NAME_SERVER" ]; then
                     PID=$(cat "$save_LOCK_NAME_SERVER")
                     ignore_this kill -9 "$PID"
@@ -717,7 +718,8 @@ mode_TRIOPS() {
                 ignore_this sleep 0.100 &&
                 bash
             fi
-
+            
+            # shellcheck disable=SC2154
             if [ -f "$save_LOCK_NAME" ]; then
                 PID=$(cat "$save_LOCK_NAME")
                 ignore_this kill -9 "$PID"

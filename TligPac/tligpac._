@@ -342,7 +342,8 @@ function bash_TligPac()
                 echo -e "$(bash_coltext_y "dbg:") No matching plugins files found: $tligpac_REMOVE_PATTERN"
             fi
 
-if [ __SAMP_SERVER == 1 ]; then
+# shellcheck disable=SC2086
+if [ $__SAMP_SERVER == 1 ]; then
             # Check if the $SERVER_CONF file exists
             if [[ -f "$SERVER_CONF" ]]; then
                 # Check if the 'plugins' entry exists in the $SERVER_CONF file
@@ -374,7 +375,7 @@ fi
 
             mode_TLIGPAC ""
             ;;
-        "$shell_OPTION -C" | "clear" | "cc")
+        "$tligpac_TRIGGER -C" | "clear" | "cc")
             clear; echo -ne "\033[3J"
             mode_TLIGPAC ""
             ;;

@@ -71,6 +71,8 @@ __handleOS() {
             done
         fi
 
+# shellcheck disable=SC2086
+# shellcheck disable=SC2153
         if [ $_OS_GNU_LINUX == 1 ]; then
             OMP_FOUND=$(find . -maxdepth 1 -type f -name "omp-server" | head -n 1)
             SAMP_FOUND=$(find . -maxdepth 1 -type f -name "samp-server" | head -n 1)

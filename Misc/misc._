@@ -37,6 +37,7 @@ export what_is_choice_pawncc
 function fetch_now()
 {
     __lat=""
+    # shellcheck disable=SC2154
     if [ -f "$shell_DIR/.commits" ]; then
         __cur=$(cat "$shell_DIR/.commits" 2>/dev/null)
     else
@@ -64,8 +65,11 @@ YP    88   YD Y888888P  \`Y88P'  88      \`8888Y'
     echo "Triops Licenses: $LICENSES"
 
     find_PLATFORM=""
+    # shellcheck disable=SC2086
     if [ $__LINUX == 1 ]; then find_PLATFORM="Linux"; fi
+    # shellcheck disable=SC2086
     if [ $__WINDOWS == 1 ]; then find_PLATFORM="${find_PLATFORM:+$find_PLATFORM & }Windows"; fi
+    # shellcheck disable=SC2086
     if [ $__DARWIN == 1 ]; then find_PLATFORM="${find_PLATFORM:+$find_PLATFORM & }Darwin / MacOS"; fi
 
     if [ -n "$find_PLATFORM" ]; then

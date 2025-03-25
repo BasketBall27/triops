@@ -18,6 +18,7 @@ if [ ! -f "$save_LOCK_NAME" ]; then
     touch "$save_LOCK_NAME"
     echo "$SHELL_DOUBL_SHA255" > "$save_LOCK_NAME"
     : ' Execute with SHA256 '
+    # shellcheck disable=SC2154
     exec -a "$SHELL_DOUBL_SHA255" ./"$shell_NAME"
 fi
 
@@ -29,6 +30,7 @@ fi
 security_file_rm()
 {
     : ' Remove File Logs '
+    # shellcheck disable=SC2154
     cd "$shell_DIR" >/dev/null 2>&1 || echo "" &&
 
     if [ "$__REMCACHE" == "true" ]; then
